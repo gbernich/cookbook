@@ -6,7 +6,10 @@ connect Cookbook;
 	
 create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(25), 
-	description VARCHAR(50))
+	description VARCHAR(50),
+	prep_time INT,
+	cook_time INT,
+	total_time INT)
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
@@ -16,9 +19,12 @@ create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 create table Measure (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(30)) 
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-
 INSERT INTO Measure (name) VALUES('CUP'), ('TEASPOON'), ('TABLESPOON'), ('OUNCES');
 
+create table Compliance (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+	name VARCHAR(50)) 
+	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+INSERT INTO Compliance (name) VALUES('WHOLE30'), ('KETO'), ('PALEO'), ('VEGATARIAN'), ('VEGAN');
 
 create table RecipeIngredient (recipe_id INT NOT NULL, 
 	ingredient_id INT NOT NULL, 
@@ -30,9 +36,13 @@ create table RecipeIngredient (recipe_id INT NOT NULL,
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
 create table RecipeInstruction (recipe_id INT NOT NULL, 
-	instruction_id INT NOT NULL,
 	instruction VARCHAR(200),
 	CONSTRAINT fk_recipe2 FOREIGN KEY(recipe_id) REFERENCES Recipe(id))
+	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
+
+create table RecipeCompliance (recipe_id INT NOT NULL, 
+	compliance_id INT NOT NULL,
+	CONSTRAINT fk_recipe3 FOREIGN KEY(recipe_id) REFERENCES Recipe(id))
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
 
