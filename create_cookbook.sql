@@ -24,7 +24,7 @@ INSERT INTO Measure (name) VALUES('CUP'), ('TEASPOON'), ('TABLESPOON'), ('OUNCES
 create table Compliance (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(50)) 
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-INSERT INTO Compliance (name) VALUES('WHOLE30'), ('KETO'), ('PALEO'), ('VEGATARIAN'), ('VEGAN');
+INSERT INTO Compliance (name) VALUES('WHOLE30'), ('KETO'), ('PALEO'), ('VEGETARIAN'), ('VEGAN');
 
 create table RecipeIngredient (recipe_id INT NOT NULL, 
 	ingredient_id INT NOT NULL, 
