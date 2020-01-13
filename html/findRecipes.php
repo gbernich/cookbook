@@ -22,6 +22,9 @@ if ($result->num_rows > 0) {
     echo "<tr>";
     echo "<td>Recipe</td>";
     echo "<td>Description</td>";
+    echo "<td>Prep Time</td>";
+    echo "<td>Cook Time</td>";
+    echo "<td>Total Time</td>";
     echo "</tr>";
 
     // output data of each row
@@ -29,6 +32,9 @@ if ($result->num_rows > 0) {
         echo "<tr>";
         echo "<td>".$row[name]."</td>";
         echo "<td>".$row[description]."</td>";
+        echo "<td>".$row[prep_time]."</td>";
+        echo "<td>".$row[cook_time]."</td>";
+        echo "<td>".$row[total_time]."</td>";
         echo "</tr>";
     }
     // Table end
