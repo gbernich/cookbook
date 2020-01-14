@@ -9,7 +9,12 @@ create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	description VARCHAR(50),
 	prep_time INT,
 	cook_time INT,
-	total_time INT)
+	total_time INT,
+	hot_cold ENUM('HOT', 'COLD'),
+	compliance_whole30 BOOL,
+	compliance_meatless BOOL,
+	compliance_other BOOL,
+	meal_type ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'DESSERT'))
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
