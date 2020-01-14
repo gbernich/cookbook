@@ -19,14 +19,14 @@
 </script>
 
 <script>
-function updateTable() {
+function updateTable(str) {
 	console.log("updateTable");
-//        document.getElementById("recipeTable").innerHTML = "<p>Hi</p>";
+	console.log(str);
 
-//    if (str.length == 0) {
-//        document.getElementById("recipeTable").innerHTML = "";
-//        return;
-//    } else {
+    if (str.length == 0) {
+        document.getElementById("recipeTable").innerHTML = "";
+        return;
+    } else {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -34,13 +34,21 @@ function updateTable() {
             }
         };
         //xmlhttp.open("GET", "findRecipes.php?compliance=" + str, true);
-        xmlhttp.open("GET", "findRecipes.php", true);
+        xmlhttp.open("GET", "findRecipes.php?criteria=" + str, true);
         xmlhttp.send();
-//    }
+    }
 }
 </script>
 </head>
 <body>
+
+	<table>
+	<tr><td>Filters</td></tr>
+
+	<tr><td><input type="checkbox" id="compliance_whole30" onclick="updateTable('compliance_whole30 = true');">Whole30</td></tr>
+	</table>
+
+
 <?php
 $servername = "localhost";
 $username   = "cookbook";
@@ -61,20 +69,6 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
 
     // Table Header
-    echo "<table>";
-    echo "<tr>";
-    echo "<td></td>";
-    echo "<td>Compliance</td>";
-    echo "</tr>";
-
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "<tr>";
-//        echo "<td><input type=\"checkbox\" id=\"compliance_.$row[id]\" onclick=\"updateTable(\"\")\"></td>";
-        echo "<td><input type=\"checkbox\" id=\"compliance_.$row[id]\" onclick=\"updateTable()\"></td>";
-        echo "<td>".$row[name]."</td>";
-        echo "</tr>";
-    }
     // Table end
     echo "</table>";
 

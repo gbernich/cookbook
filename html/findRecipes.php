@@ -12,7 +12,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT * FROM Recipe";
+$criteria = $_GET['criteria'];
+
+$sql = "SELECT * FROM Recipe WHERE ".$criteria;
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
