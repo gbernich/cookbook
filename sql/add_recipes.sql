@@ -4,7 +4,8 @@ INSERT INTO Ingredient (name) VALUES('egg'), ('salt'), ('sugar'), ('chocolate'),
 
 
 
-INSERT INTO Recipe (name, description, prep_time, cook_time, total_time) VALUES('Boiled Egg', 'A single boiled egg', 5, 15, 20);
+INSERT INTO Recipe (name, description, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
+			VALUES('Boiled Egg', 'A single boiled egg', 5, 15, 20, 'COLD', true, true, false, 'LUNCH');
 
 INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount) VALUES (1, 1, NULL, 1);
 
@@ -17,7 +18,9 @@ INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (1, 1);
 INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (1, 2);
 
 
-INSERT INTO Recipe (name, description, prep_time, cook_time, total_time) VALUES('Chocolate Cake', 'Yummy cake', 10, 30, 40);
+
+INSERT INTO Recipe (name, description, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
+			VALUES('Chocolate Cake', 'Yummy cake', 10, 30, 40, 'COLD', false, false, true, 'DESSERT');
 
 INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount)  VALUES (2, 1, NULL, 3);
 INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount)  VALUES (2, 2, 2, 1);
@@ -29,6 +32,24 @@ INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (2, 'Add eggs, flo
 INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (2, 'Bake for 1 hour.');
 
 INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (2, 4);
+
+
+
+INSERT INTO Recipe (name, description, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
+			VALUES('Roasted Brusselsprouts', 'Crispy roasted brusselsprouts', 20, 20, 40, 'HOT', true, true, false, 'DINNER');
+
+INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount)  VALUES (3, 4, 2, 1);
+
+INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (3, 'Preheat oven to 400..');
+INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (3, 'Peel outer leaves from sprouts.');
+INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (3, 'Cut the stems off.');
+INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (3, 'Cut the sprouts in half.');
+INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (3, 'Toss in olive oil, salt, and pepper.');
+INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (3, 'Roast for 20 minutes, or until brown.');
+
+INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (3, 1);
+INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (3, 3);
+INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (3, 4);
 
 
 
