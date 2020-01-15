@@ -15,7 +15,12 @@ if ($conn->connect_error) {
 }
 
 $sql = "INSERT INTO Recipe (name, description, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
-			VALUES('".$_POST['name']."', '".$_POST['description']."', ".$_POST['prep_time'].", ".$_POST['cook_time'].", ".$_POST['total_time'].", 'COLD', true, true, false, 'LUNCH');";
+			VALUES('".$_POST['name']."',
+                               '".$_POST['description']."',
+                                ".$_POST['prep_time'].",
+                                ".$_POST['cook_time'].",
+                                ".$_POST['total_time'].",
+                               '".$_POST['hot_cold']."', true, true, false, 'LUNCH');";
 
 
 $result = $conn->query($sql);
@@ -34,7 +39,9 @@ $result = $conn->query($sql);
 	<textarea cols="40" placeholder="Recipe Description" rows="8" name="description" required></textarea><br>
 	<input type="text" name="prep_time" placeholder="Prep Time" ><br>
 	<input type="text" name="cook_time" placeholder="Cook Time" ><br>
-	<input type="text" name="total_time" placeholder="Total Time" ><br>	
+	<input type="text" name="total_time" placeholder="Total Time" ><br>
+	<input type="radio" name="hot_cold" value="HOT" checked /> <span>Hot</span>
+	<input type="radio" name="hot_cold" value="COLD" /> <span>Cold</span>
 	<button type="submit" name="submit">Submit</button>
 </form>
 </body>
