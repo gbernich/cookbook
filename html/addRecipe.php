@@ -14,6 +14,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// insert Recipe
 $sql = "INSERT INTO Recipe (name, description, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
 			VALUES('".$_POST['name']."',
                                '".$_POST['description']."',
@@ -27,7 +28,23 @@ $sql = "INSERT INTO Recipe (name, description, prep_time, cook_time, total_time,
                                '".$_POST['meal_type']."');";
 
 
-$result = $conn->query($sql);
+$result    = $conn->query($sql);
+$recipe_id = $conn->insert_id;
+
+// Handle Recipe Incstructions
+//$instructions = explode("\n",
+$instructions = preg_split("/\r\n|\n|\r/", $_POST['instructions']);
+//$instructions = explode("\n","do this first\nthen this\nandthen this");
+
+foreach( $instructions as $instruction )
+{
+	$sql    = "INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (".$recipe_id.", '".$instruction."');";
+	$result = $conn->query($sql);
+}
+
+// Close connection
+$conn->close();
+
 }
 ?>
 
@@ -65,6 +82,8 @@ $result = $conn->query($sql);
 	<input type="radio" name="meal_type"    value="LUNCH"              /> <span>Lunch</span>
 	<input type="radio" name="meal_type"    value="DINNER"             /> <span>Dinner</span>
 	<input type="radio" name="meal_type"    value="DESSERT"            /> <span>Dessert</span><br>
+
+	<textarea cols="40" placeholder="Instructions" rows="8" name="instructions" required></textarea><br>
 
 	<button type="submit" name="submit">Submit</button>
 </form>
