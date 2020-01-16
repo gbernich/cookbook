@@ -31,14 +31,35 @@ $sql = "INSERT INTO Recipe (name, description, prep_time, cook_time, total_time,
 $result    = $conn->query($sql);
 $recipe_id = $conn->insert_id;
 
-// Handle Recipe Incstructions
-//$instructions = explode("\n",
+// Handle Recipe Instructions
 $instructions = preg_split("/\r\n|\n|\r/", $_POST['instructions']);
-//$instructions = explode("\n","do this first\nthen this\nandthen this");
-
 foreach( $instructions as $instruction )
 {
 	$sql    = "INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (".$recipe_id.", '".$instruction."');";
+	$result = $conn->query($sql);
+}
+
+// Handle Recipe Ingredients
+$ingredients = preg_split("/\r\n|\n|\r/", $_POST['ingredients']);
+foreach( $ingredients as $ingredient )
+{
+	// See if ingredient exists
+	$sql    = "SELECT * FROM Ingredient WHERE name = '".$ingredient."';";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		// the ingredient exists, use this id
+		$row = $result->fetch_assoc();
+		$ingredient_id = $row["id"];
+	} else {
+		// the ingredient doesnt exist, add it, and use latest id
+		$sql = "INSERT INTO Ingredient (name) VALUES ('".$ingredient."');";
+		$result = $conn->query($sql);
+		$ingredient_id = $conn->insert_id;
+	}
+
+	// Associate ingredient with recipe
+	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id) VALUES (".$recipe_id.", ".$ingredient_id.");";
 	$result = $conn->query($sql);
 }
 
@@ -82,6 +103,8 @@ $conn->close();
 	<input type="radio" name="meal_type"    value="LUNCH"              /> <span>Lunch</span>
 	<input type="radio" name="meal_type"    value="DINNER"             /> <span>Dinner</span>
 	<input type="radio" name="meal_type"    value="DESSERT"            /> <span>Dessert</span><br>
+
+	<textarea cols="40" placeholder="Ingredients" rows="8" name="ingredients" required></textarea><br>
 
 	<textarea cols="40" placeholder="Instructions" rows="8" name="instructions" required></textarea><br>
 
