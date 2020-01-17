@@ -97,13 +97,14 @@ $conn->close();
 <head>
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 	<meta content="utf-8" http-equiv="encoding">
+	<meta name="viewport" content="width=device-width, initial-scale=0.95">
 <title>Form site</title>
 </head>
 <body>
 <form method="post" action="">
 	<input type="text" name="name" placeholder="Recipe Name" required><br>
 
-	<textarea cols="40" placeholder="Recipe Description" rows="8" name="description" required></textarea><br>
+	<textarea cols="60" placeholder="Recipe Description" rows="8" name="description" required></textarea><br>
 
 	<input type="text" name="prep_time" placeholder="Prep Time" ><br>
 
@@ -128,9 +129,9 @@ $conn->close();
 	<input type="radio" name="meal_type"    value="DINNER"             /> <span>Dinner</span>
 	<input type="radio" name="meal_type"    value="DESSERT"            /> <span>Dessert</span><br>
 
-	<textarea cols="40" placeholder="Ingredients" rows="8" name="ingredients" required></textarea><br>
+	<textarea cols="60" placeholder="Ingredient: amount measurement, ingredient" rows="15" name="ingredients" required></textarea><br>
 
-	<textarea cols="40" placeholder="Instructions" rows="8" name="instructions" required></textarea><br>
+	<textarea cols="60" placeholder="Instruction: one per line" rows="10" name="instructions" required></textarea><br>
 
 	<button type="submit" name="submit">Submit</button>
 </form>
