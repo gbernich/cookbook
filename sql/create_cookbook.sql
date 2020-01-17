@@ -24,7 +24,7 @@ create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 create table Measure (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(30)) 
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-INSERT INTO Measure (name) VALUES('CUP'), ('TEASPOON'), ('TABLESPOON'), ('OUNCES');
+INSERT INTO Measure (name) VALUES('cup'), ('tsp'), ('tbsp'), ('ounces');
 
 create table Compliance (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(50)) 
