@@ -40,9 +40,17 @@ foreach( $instructions as $instruction )
 }
 
 // Handle Recipe Ingredients
-$ingredients = preg_split("/\r\n|\n|\r/", $_POST['ingredients']);
-foreach( $ingredients as $ingredient )
+$ingredientLines = preg_split("/\r\n|\n|\r/", strtolower($_POST['ingredients']));
+foreach( $ingredientLines as $ingredientLine )
 {
+	// Parse ingredient line
+	$ingredientArr = preg_split('/,/', $ingredientLine);
+	$ingredient    = trim($ingredientArr[1]);
+
+	$quantityArr = preg_split('/\s+/', trim($ingredientArr[0]), 2);
+	$amount      = trim($quantityArr[0]);
+	$measure     = trim($quantityArr[1]);
+
 	// See if ingredient exists
 	$sql    = "SELECT * FROM Ingredient WHERE name = '".$ingredient."';";
 	$result = $conn->query($sql);
@@ -58,9 +66,25 @@ foreach( $ingredients as $ingredient )
 		$ingredient_id = $conn->insert_id;
 	}
 
-	// Associate ingredient with recipe
-	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id) VALUES (".$recipe_id.", ".$ingredient_id.");";
+	// See if measurement exists
+	$sql    = "SELECT * FROM Measure WHERE name = '".$measure."';";
 	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		// the measurement exists, use this id
+		$row = $result->fetch_assoc();
+		$measure_id = $row["id"];
+	} else {
+		// the measurement doesnt exist, add it, and use latest id
+		$sql = "INSERT INTO Measure (name) VALUES ('".$measure."');";
+		$result = $conn->query($sql);
+		$measure_id = $conn->insert_id;
+	}
+
+	// Associate ingredient with recipe
+	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount) VALUES (".$recipe_id.", ".$ingredient_id.", ".$measure_id.", ".$amount.");";
+	$result = $conn->query($sql);
+
 }
 
 // Close connection
