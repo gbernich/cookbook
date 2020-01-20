@@ -1,20 +1,28 @@
---drop database if exists Cookbook;
-
 create database Cookbook; 
 
 connect Cookbook; 
 	
 create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-	name VARCHAR(25), 
-	description VARCHAR(50),
-	prep_time INT,
-	cook_time INT,
-	total_time INT,
-	hot_cold ENUM('HOT', 'COLD'),
-	compliance_whole30 BOOL,
-	compliance_meatless BOOL,
-	compliance_other BOOL,
-	meal_type ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'DESSERT'))
+	name VARCHAR(50) NOT NULL,
+	description VARCHAR(200) NOT NULL,
+	servings INT NOT NULL,
+	prep_time INT NOT NULL,
+	cook_time INT NOT NULL,
+	total_time INT NOT NULL,
+	hot_cold ENUM('HOT', 'COLD') NOT NULL,
+	compliance_whole30 BOOL NOT NULL,
+	compliance_meatless BOOL NOT NULL,
+	compliance_other BOOL NOT NULL,
+	meal_type ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'DESSERT') NOT NULL,
+	calories INT,
+	fat INT,
+	saturated_fat INT,
+	cholesterol INT,
+	sodium INT,
+	carbohydrates INT,
+	fiber INT,
+	sugar INT,
+	protein INT)
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
