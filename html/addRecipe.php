@@ -46,11 +46,25 @@ foreach( $ingredientLines as $ingredientLine )
 {
 	// Parse ingredient line
 	$ingredientArr = preg_split('/,/', $ingredientLine);
-	$ingredient    = trim($ingredientArr[1]);
+	$amount        = trim($ingredientArr[0]);
+	$measure       = trim($ingredientArr[1]);
+	$ingredient    = trim($ingredientArr[2]);
 
-	$quantityArr = preg_split('/\s+/', trim($ingredientArr[0]), 2);
-	$amount      = trim($quantityArr[0]);
-	$measure     = trim($quantityArr[1]);
+	$amountArr = preg_split('/[\s\/]+/', trim($amount), 3);
+
+	if (sizeof($amountArr) == 3) {
+		$amount_whole       = $amountArr[0];
+		$amount_numerator   = $amountArr[1];
+		$amount_denominator = $amountArr[2];
+	} elseif (sizeof($amountArr) == 2) {
+		$amount_whole       = 0;
+		$amount_numerator   = $amountArr[0];
+		$amount_denominator = $amountArr[1];
+	} else {
+		$amount_whole       = $amountArr[0];
+		$amount_numerator   = 0;
+		$amount_denominator = 0;
+	}
 
 	// See if ingredient exists
 	$sql    = "SELECT * FROM Ingredient WHERE name = '".$ingredient."';";
@@ -83,7 +97,8 @@ foreach( $ingredientLines as $ingredientLine )
 	}
 
 	// Associate ingredient with recipe
-	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount) VALUES (".$recipe_id.", ".$ingredient_id.", ".$measure_id.", ".$amount.");";
+	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount_whole, amount_numerator, amount_denominator) 
+                   VALUES (".$recipe_id.", ".$ingredient_id.", ".$measure_id.", ".$amount_whole.", ".$amount_numerator.", ".$amount_denominator.");";
 	$result = $conn->query($sql);
 
 }
@@ -132,7 +147,7 @@ $conn->close();
 	<input type="radio" name="meal_type"    value="DINNER"             /> <span>Dinner</span>
 	<input type="radio" name="meal_type"    value="DESSERT"            /> <span>Dessert</span><br><br>
 
-	<textarea cols="80" placeholder="Ingredient: amount measurement, ingredient" rows="10" name="ingredients" pattern="[0-9]+\s+[A-Za-z]+\s+[\,]{1}\s+[A-Za-z\s]+" required></textarea><br><br>
+	<textarea cols="80" placeholder="Ingredient: amount, measurement, ingredient" rows="10" name="ingredients" pattern="[0-9]+\s+[A-Za-z]+\s+[\,]{1}\s+[A-Za-z\s]+" required></textarea><br><br>
 
 	<textarea cols="80" placeholder="Instruction: one per line" rows="10" name="instructions" required></textarea><br><br>
 

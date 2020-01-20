@@ -1,8 +1,8 @@
-create database Cookbook; 
+create database Cookbook;
 
-connect Cookbook; 
-	
-create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+connect Cookbook;
+
+create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	name VARCHAR(50) NOT NULL,
 	description VARCHAR(200) NOT NULL,
 	servings INT NOT NULL,
@@ -42,7 +42,9 @@ INSERT INTO Compliance (name) VALUES('WHOLE30'), ('KETO'), ('PALEO'), ('VEGETARI
 create table RecipeIngredient (recipe_id INT NOT NULL, 
 	ingredient_id INT NOT NULL, 
 	measure_id INT, 
-	amount INT, 
+	amount_whole INT, 
+	amount_numerator INT, 
+	amount_denominator INT, 
 	CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES Recipe(id), 
 	CONSTRAINT fk_ingredient FOREIGN KEY(ingredient_id) REFERENCES Ingredient(id), 
 	CONSTRAINT fk_measure FOREIGN KEY(measure_id) REFERENCES Measure(id)) 
