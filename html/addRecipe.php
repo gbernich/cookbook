@@ -15,9 +15,10 @@ if ($conn->connect_error) {
 }
 
 // insert Recipe
-$sql = "INSERT INTO Recipe (name, description, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
+$sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
 			VALUES('".$_POST['name']."',
                                '".$_POST['description']."',
+                                ".$_POST['servings'].",
                                 ".$_POST['prep_time'].",
                                 ".$_POST['cook_time'].",
                                 ".$_POST['total_time'].",
@@ -102,36 +103,38 @@ $conn->close();
 </head>
 <body>
 <form method="post" action="">
-	<input type="text" name="name" placeholder="Recipe Name" required><br>
+	<input type="text" name="name" placeholder="Recipe Name" maxlength="50" size="80" required><br><br>
 
-	<textarea cols="60" placeholder="Recipe Description" rows="8" name="description" required></textarea><br>
+	<textarea cols="80" placeholder="Recipe Description" rows="6" name="description" maxlength="200" required></textarea><br><br>
 
-	<input type="text" name="prep_time" placeholder="Prep Time" ><br>
+	<input type="text" name="servings" placeholder="Servings" size="10" required><br><br>
 
-	<input type="text"  name="cook_time"  placeholder="Cook Time" ><br>
+	<input type="text" name="prep_time" placeholder="Prep Time" size="10">
 
-	<input type="text"  name="total_time" placeholder="Total Time" ><br>
+	<input type="text"  name="cook_time"  placeholder="Cook Time" size="10">
+
+	<input type="text"  name="total_time" placeholder="Total Time" size="10"><span> minutes</span><br><br>
 
 	<input type="radio" name="hot_cold" value="HOT" checked /> <span>Hot</span>
-	<input type="radio" name="hot_cold" value="COLD"        /> <span>Cold</span><br>
+	<input type="radio" name="hot_cold" value="COLD"        /> <span>Cold</span><br><br>
 
-	<input type="radio" name="compliance_whole30"  value="true"          /> <span>WHOLE30</span>
-	<input type="radio" name="compliance_whole30"  value="false" checked /> <span>No</span><br>
+	<input type="radio" name="compliance_whole30"  value="true"          /> <span>Whole30</span>
+	<input type="radio" name="compliance_whole30"  value="false" checked /> <span>No</span><br><br>
 
 	<input type="radio" name="compliance_meatless" value="true"          /> <span>Meatless</span>
-	<input type="radio" name="compliance_meatless" value="false" checked /> <span>No</span><br>
+	<input type="radio" name="compliance_meatless" value="false" checked /> <span>No</span><br><br>
 
 	<input type="radio" name="compliance_other"    value="true"          /> <span>Other</span>
-	<input type="radio" name="compliance_other"    value="false" checked /> <span>No</span><br>
+	<input type="radio" name="compliance_other"    value="false" checked /> <span>No</span><br><br>
 
 	<input type="radio" name="meal_type"    value="BREAKFAST"  checked /> <span>Breakfast</span>
 	<input type="radio" name="meal_type"    value="LUNCH"              /> <span>Lunch</span>
 	<input type="radio" name="meal_type"    value="DINNER"             /> <span>Dinner</span>
-	<input type="radio" name="meal_type"    value="DESSERT"            /> <span>Dessert</span><br>
+	<input type="radio" name="meal_type"    value="DESSERT"            /> <span>Dessert</span><br><br>
 
-	<textarea cols="60" placeholder="Ingredient: amount measurement, ingredient" rows="15" name="ingredients" required></textarea><br>
+	<textarea cols="80" placeholder="Ingredient: amount measurement, ingredient" rows="10" name="ingredients" pattern="[0-9]+\s+[A-Za-z]+\s+[\,]{1}\s+[A-Za-z\s]+" required></textarea><br><br>
 
-	<textarea cols="60" placeholder="Instruction: one per line" rows="10" name="instructions" required></textarea><br>
+	<textarea cols="80" placeholder="Instruction: one per line" rows="10" name="instructions" required></textarea><br><br>
 
 	<button type="submit" name="submit">Submit</button>
 </form>
