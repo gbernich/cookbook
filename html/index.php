@@ -19,33 +19,67 @@
 </script>
 
 <script>
-function updateTable(str) {
-	console.log("updateTable");
-	console.log(str);
-
-    if (str.length == 0) {
-        document.getElementById("recipeTable").innerHTML = "";
-        return;
-    } else {
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("recipeTable").innerHTML = this.responseText;
-            }
-        };
-        //xmlhttp.open("GET", "findRecipes.php?compliance=" + str, true);
-        xmlhttp.open("GET", "findRecipes.php?criteria=" + str, true);
-        xmlhttp.send();
-    }
+function getCheckedCheckboxesFor(checkboxName) {
+    var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+    Array.prototype.forEach.call(checkboxes, function(el) {
+        values.push(el.value);
+    });
+    return values;
 }
+
+function updateTable() {
+	console.log();
+
+	var criteriaArray = new Array();
+
+	var tmp = "";
+
+	tmp = getCheckedCheckboxesFor('compliance_whole30').join(' or '); 	if (tmp) {criteriaArray.push(tmp);}
+	tmp = getCheckedCheckboxesFor('compliance_meatless').join(' or '); 	if (tmp) {criteriaArray.push(tmp);}
+	tmp = getCheckedCheckboxesFor('compliance_other').join(' or '); 	if (tmp) {criteriaArray.push(tmp);}
+	tmp = getCheckedCheckboxesFor('hot_cold').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
+	tmp = getCheckedCheckboxesFor('meal_type').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
+
+	var criteria = criteriaArray.join(') and (');
+
+	console.log(criteria);
+
+	// if string empty, reload all recipes
+	if (criteria == "") {
+		initPage();
+		return;
+	}
+
+	// Clean up criteria
+	criteria = "(".concat(criteria, ")");
+	console.log(criteria);
+
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			document.getElementById("recipeTable").innerHTML = this.responseText;
+		}
+	};
+	xmlhttp.open("GET", "findRecipes.php?criteria=" + criteria, true);
+	xmlhttp.send();
+
+}
+
 </script>
 </head>
 <body>
 
 	<table>
 	<tr><td>Filters</td></tr>
-
-	<tr><td><input type="checkbox" id="compliance_whole30" onclick="updateTable('compliance_whole30 = true');">Whole30</td></tr>
+	<tr><td><input name="compliance_whole30"  type="checkbox" value="compliance_whole30=true"  onclick="updateTable();"/>Whole30</td></tr>
+	<tr><td><input name="compliance_meatless" type="checkbox" value="compliance_meatless=true" onclick="updateTable();"/>Meatless</td></tr>
+	<tr><td><input name="compliance_other"    type="checkbox" value="compliance_other=true"    onclick="updateTable();"/>Other</td></tr>
+	<tr><td><input name="hot_cold"            type="checkbox" value="hot_cold='HOT'"           onclick="updateTable();"/>Hot</td>
+	    <td><input name="hot_cold"            type="checkbox" value="hot_cold='COLD'"          onclick="updateTable();"/>Cold</td></tr>
+	<tr><td><input name="meal_type"           type="checkbox" value="meal_type='BREAKFAST'"    onclick="updateTable();"/>Breakfast</td>
+	    <td><input name="meal_type"           type="checkbox" value="meal_type='LUNCH'"        onclick="updateTable();"/>Lunch</td>
+	    <td><input name="meal_type"           type="checkbox" value="meal_type='DINNER'"       onclick="updateTable();"/>Dinner</td>
+	    <td><input name="meal_type"           type="checkbox" value="meal_type='DESSERT'"      onclick="updateTable();"/>Dessert</td></tr>
 	</table>
 
 
