@@ -21,10 +21,8 @@ if ($result->num_rows > 0) {
     echo "<table>";
     echo "<tr>";
     echo "<td>Recipe</td>";
-    echo "<td>Description</td>";
     echo "<td>Prep Time</td>";
     echo "<td>Cook Time</td>";
-    echo "<td>Total Time</td>";
     echo "<td>Calories</td>";
     echo "<td>Meal Type</td>";
     echo "<td>Hot/Cold</td>";
@@ -34,10 +32,8 @@ if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()) {
         echo "<tr>";
         echo "<td>".$row[name]."</td>";
-        echo "<td>".$row[description]."</td>";
         echo "<td>".$row[prep_time]."</td>";
         echo "<td>".$row[cook_time]."</td>";
-        echo "<td>".$row[total_time]."</td>";
         echo "<td>".$row[calories]."</td>";
         echo "<td>".strtolower($row[meal_type])."</td>";
         echo "<td>".strtolower($row[hot_cold])."</td>";
