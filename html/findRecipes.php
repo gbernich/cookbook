@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
         echo "<tr>";
-        echo "<td>".$row[name]."</td>";
+	echo "<td><a href='http://cookbook.local/display.php?id=".$row[id]."'>".$row[name]."</a></td>";
         echo "<td>".$row[prep_time]."</td>";
         echo "<td>".$row[cook_time]."</td>";
         echo "<td>".$row[calories]."</td>";
