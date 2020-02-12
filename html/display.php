@@ -46,12 +46,12 @@ if ($result->num_rows > 0) {
 // Ingredients
 //$sql = "SELECT * FROM RecipeInstruction WHERE recipe_id = ".$id.";";
 $sql = "
-SELECT r.name AS 'Recipe', 
-        ri.amount_whole AS 'Amount Whole', 
-        ri.amount_numerator AS 'Amount Num', 
-        ri.amount_denominator AS 'Amount Den', 
-        mu.name AS 'Unit of Measure', 
-        i.name AS 'Ingredient' 
+SELECT r.name AS 'recipe', 
+        ri.amount_whole AS 'amount_whole', 
+        ri.amount_numerator AS 'amount_num', 
+        ri.amount_denominator AS 'amount_den', 
+        mu.name AS 'unit', 
+        i.name AS 'ingredient' 
 FROM Recipe r 
 JOIN RecipeIngredient ri on r.id = ri.recipe_id 
 JOIN Ingredient i on i.id = ri.ingredient_id 
@@ -69,7 +69,7 @@ if ($result->num_rows > 0) {
 	echo "<ul>";
 
 	while($row = $result->fetch_assoc()) {
-		echo "<li>".$row['Ingredient']."</li>";
+		echo "<li>".$row['amount_whole']." ".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']."</li>";
 	}
 
 	// Table end
