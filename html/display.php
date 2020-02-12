@@ -69,7 +69,12 @@ if ($result->num_rows > 0) {
 	echo "<ul>";
 
 	while($row = $result->fetch_assoc()) {
-		echo "<li>".$row['amount_whole']." ".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']."</li>";
+		if ( $row['amount_num'] == 0 || $row['amount_den'] == 0 ) {
+			echo "<li>".$row['amount_whole']." ".$row['unit']." ".$row['ingredient']."</li>";
+		}
+		else {
+			echo "<li>".$row['amount_whole']." ".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']."</li>";
+		}
 	}
 
 	// Table end
