@@ -43,9 +43,12 @@ if ($result->num_rows > 0) {
 } else {
     echo "Recipe Not Found";
 }
-/*
-$sql = "SELECT * FROM RecipeIngredient WHERE id = ".$id.";";
+
+$sql = "SELECT * FROM RecipeInstruction WHERE recipe_id = ".$id.";";
 $result = $conn->query($sql);
+
+echo "<br><br><br>";
+echo "<h3>Instructions</h3>";
 
 if ($result->num_rows > 0) {
 
@@ -53,7 +56,7 @@ if ($result->num_rows > 0) {
 	echo "<ul>";
 
 	while($row = $result->fetch_assoc()) {
-		echo "<li> "
+		echo "<li>".$row[instruction]."</li>";
 	}
 
 	// Table end
@@ -63,7 +66,7 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
-*/
+
 $conn->close();
 ?> 
 
