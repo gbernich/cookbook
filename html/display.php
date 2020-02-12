@@ -43,11 +43,47 @@ if ($result->num_rows > 0) {
 } else {
     echo "Recipe Not Found";
 }
+// Ingredients
+//$sql = "SELECT * FROM RecipeInstruction WHERE recipe_id = ".$id.";";
+$sql = "
+SELECT r.name AS 'Recipe', 
+        ri.amount_whole AS 'Amount Whole', 
+        ri.amount_numerator AS 'Amount Num', 
+        ri.amount_denominator AS 'Amount Den', 
+        mu.name AS 'Unit of Measure', 
+        i.name AS 'Ingredient' 
+FROM Recipe r 
+JOIN RecipeIngredient ri on r.id = ri.recipe_id 
+JOIN Ingredient i on i.id = ri.ingredient_id 
+LEFT OUTER JOIN Measure mu on mu.id = measure_id
+WHERE r.id = ".$id.";";
 
+$result = $conn->query($sql);
+
+echo "<br><br>";
+echo "<h3>Ingredients</h3>";
+
+if ($result->num_rows > 0) {
+
+	// Table Header
+	echo "<ul>";
+
+	while($row = $result->fetch_assoc()) {
+		echo "<li>".$row['Ingredient']."</li>";
+	}
+
+	// Table end
+	echo "</ul>";
+
+} else {
+    echo "0 results";
+}
+
+// Instructions
 $sql = "SELECT * FROM RecipeInstruction WHERE recipe_id = ".$id.";";
 $result = $conn->query($sql);
 
-echo "<br><br><br>";
+echo "<br><br>";
 echo "<h3>Instructions</h3>";
 
 if ($result->num_rows > 0) {
