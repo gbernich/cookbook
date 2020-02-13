@@ -32,6 +32,30 @@ $sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, t
 $result    = $conn->query($sql);
 $recipe_id = $conn->insert_id;
 
+// See if compliance exists
+$complianceLines = preg_split("/\r\n|\n|\r/", strtolower($_POST['compliances']));
+foreach( $complianceLines as $complianceLine )
+{
+	$compliance = trim($complianceLine);
+	$sql    = "SELECT * FROM Compliance WHERE name = '".$compliance."';";
+	$result = $conn->query($sql);
+
+	if ($result->num_rows > 0) {
+		// the compliance exists, use this id
+		$row = $result->fetch_assoc();
+		$compliance_id = $row["id"];
+	} else {
+		// the compliance doesnt exist, add it, and use latest id
+		$sql = "INSERT INTO Compliance (name) VALUES ('".$compliance."');";
+		$result = $conn->query($sql);
+		$compliance_id = $conn->insert_id;
+	}
+
+	// Tag this recipe with each compliance
+	$sql    = "INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (".$recipe_id.", ".$compliance_id.");";
+	$result = $conn->query($sql);
+}
+
 // Handle Recipe Instructions
 $instructions = preg_split("/\r\n|\n|\r/", $_POST['instructions']);
 foreach( $instructions as $instruction )
@@ -120,7 +144,7 @@ $conn->close();
 <form method="post" action="">
 	<input type="text" name="name" placeholder="Recipe Name" maxlength="50" size="80" required><br><br>
 
-	<textarea cols="80" placeholder="Recipe Description" rows="6" name="description" maxlength="200" required></textarea><br><br>
+	<textarea cols="80" placeholder="Recipe Description" rows="5" name="description" maxlength="200" required></textarea><br><br>
 
 	<input type="text" name="servings" placeholder="Servings" size="10" required><br><br>
 
@@ -146,6 +170,8 @@ $conn->close();
 	<input type="radio" name="meal_type"    value="LUNCH"              /> <span>Lunch</span>
 	<input type="radio" name="meal_type"    value="DINNER"             /> <span>Dinner</span>
 	<input type="radio" name="meal_type"    value="DESSERT"            /> <span>Dessert</span><br><br>
+
+	<textarea cols="30" placeholder="Compliance: one per line" rows="5" name="compliances" required></textarea><br><br>
 
 	<textarea cols="80" placeholder="Ingredient: amount, measurement, ingredient" rows="10" name="ingredients" pattern="[0-9]+\s+[A-Za-z]+\s+[\,]{1}\s+[A-Za-z\s]+" required></textarea><br><br>
 
