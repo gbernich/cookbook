@@ -43,8 +43,38 @@ if ($result->num_rows > 0) {
 } else {
     echo "Recipe Not Found";
 }
+
+// Compliances
+$sql = "
+SELECT r.name AS 'recipe', 
+        c.name AS 'compliance' 
+FROM Recipe r 
+JOIN RecipeCompliance rc on r.id = rc.recipe_id
+LEFT OUTER JOIN Compliance c on c.id = compliance_id
+WHERE r.id = ".$id.";";
+
+$result = $conn->query($sql);
+
+echo "<br><br>";
+echo "<h3>Compliant with</h3>";
+
+if ($result->num_rows > 0) {
+
+	// Table Header
+	echo "<ul>";
+
+	while($row = $result->fetch_assoc()) {
+		echo "<li>".$row['compliance']."</li>";
+	}
+
+	// Table end
+	echo "</ul>";
+
+} else {
+    echo "0 results";
+}
+
 // Ingredients
-//$sql = "SELECT * FROM RecipeInstruction WHERE recipe_id = ".$id.";";
 $sql = "
 SELECT r.name AS 'recipe', 
         ri.amount_whole AS 'amount_whole', 
