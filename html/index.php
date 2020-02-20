@@ -34,17 +34,13 @@ function updateTable() {
 	var criteriaArray = new Array();
 
 	var tmp = "";
-
-//	tmp = getCheckedCheckboxesFor('compliance_whole30').join(' or '); 	if (tmp) {criteriaArray.push(tmp);}
-//	tmp = getCheckedCheckboxesFor('compliance_meatless').join(' or '); 	if (tmp) {criteriaArray.push(tmp);}
-//	tmp = getCheckedCheckboxesFor('compliance_other').join(' or '); 	if (tmp) {criteriaArray.push(tmp);}
 	tmp = getCheckedCheckboxesFor('hot_cold').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
 	tmp = getCheckedCheckboxesFor('meal_type').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
-//	tmp = getCheckedCheckboxesFor('compliance').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
-
 	var criteria = criteriaArray.join(') and (');
-
 	console.log(criteria);
+
+	compliances = getCheckedCheckboxesFor('compliance').join(',');
+	console.log(compliances);
 
 	// if string empty, reload all recipes
 	if (criteria == "") {
@@ -62,7 +58,7 @@ function updateTable() {
 			document.getElementById("recipeTable").innerHTML = this.responseText;
 		}
 	};
-	xmlhttp.open("GET", "findRecipes.php?criteria=" + criteria, true);
+	xmlhttp.open("GET", "findRecipes.php?criteria=" + criteria + "&compliances=" + compliances, true);
 	xmlhttp.send();
 
 }
@@ -73,10 +69,6 @@ function updateTable() {
 
 	<table>
 	<tr><td>Filters</td></tr>
-<!--	<tr><td><input name="compliance_whole30"  type="checkbox" value="compliance_whole30=true"  onclick="updateTable();"/>Whole30</td></tr>
-	<tr><td><input name="compliance_meatless" type="checkbox" value="compliance_meatless=true" onclick="updateTable();"/>Meatless</td></tr>
-	<tr><td><input name="compliance_other"    type="checkbox" value="compliance_other=true"    onclick="updateTable();"/>Other</td></tr>
--->
 	<tr><td><input name="hot_cold"            type="checkbox" value="hot_cold='HOT'"           onclick="updateTable();"/>Hot</td>
 	    <td><input name="hot_cold"            type="checkbox" value="hot_cold='COLD'"          onclick="updateTable();"/>Cold</td></tr>
 	<tr><td><input name="meal_type"           type="checkbox" value="meal_type='BREAKFAST'"    onclick="updateTable();"/>Breakfast</td>
@@ -106,7 +98,7 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
-		echo "<tr><td><input name='compliance' type='checkbox' value=c.id=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
+		echo "<tr><td><input name='compliance' type='checkbox' value=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
 	}
 } else {
     echo "0 results";
