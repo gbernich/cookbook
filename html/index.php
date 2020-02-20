@@ -40,7 +40,7 @@ function updateTable() {
 //	tmp = getCheckedCheckboxesFor('compliance_other').join(' or '); 	if (tmp) {criteriaArray.push(tmp);}
 	tmp = getCheckedCheckboxesFor('hot_cold').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
 	tmp = getCheckedCheckboxesFor('meal_type').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
-	tmp = getCheckedCheckboxesFor('compliance').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
+//	tmp = getCheckedCheckboxesFor('compliance').join(' or '); 		if (tmp) {criteriaArray.push(tmp);}
 
 	var criteria = criteriaArray.join(') and (');
 
@@ -77,12 +77,12 @@ function updateTable() {
 	<tr><td><input name="compliance_meatless" type="checkbox" value="compliance_meatless=true" onclick="updateTable();"/>Meatless</td></tr>
 	<tr><td><input name="compliance_other"    type="checkbox" value="compliance_other=true"    onclick="updateTable();"/>Other</td></tr>
 -->
-	<tr><td><input name="hot_cold"            type="checkbox" value="r.hot_cold='HOT'"           onclick="updateTable();"/>Hot</td>
-	    <td><input name="hot_cold"            type="checkbox" value="r.hot_cold='COLD'"          onclick="updateTable();"/>Cold</td></tr>
-	<tr><td><input name="meal_type"           type="checkbox" value="r.meal_type='BREAKFAST'"    onclick="updateTable();"/>Breakfast</td>
-	    <td><input name="meal_type"           type="checkbox" value="r.meal_type='LUNCH'"        onclick="updateTable();"/>Lunch</td>
-	    <td><input name="meal_type"           type="checkbox" value="r.meal_type='DINNER'"       onclick="updateTable();"/>Dinner</td>
-	    <td><input name="meal_type"           type="checkbox" value="r.meal_type='DESSERT'"      onclick="updateTable();"/>Dessert</td></tr>
+	<tr><td><input name="hot_cold"            type="checkbox" value="hot_cold='HOT'"           onclick="updateTable();"/>Hot</td>
+	    <td><input name="hot_cold"            type="checkbox" value="hot_cold='COLD'"          onclick="updateTable();"/>Cold</td></tr>
+	<tr><td><input name="meal_type"           type="checkbox" value="meal_type='BREAKFAST'"    onclick="updateTable();"/>Breakfast</td>
+	    <td><input name="meal_type"           type="checkbox" value="meal_type='LUNCH'"        onclick="updateTable();"/>Lunch</td>
+	    <td><input name="meal_type"           type="checkbox" value="meal_type='DINNER'"       onclick="updateTable();"/>Dinner</td>
+	    <td><input name="meal_type"           type="checkbox" value="meal_type='DESSERT'"      onclick="updateTable();"/>Dessert</td></tr>
 	</table>
 
 	<table>
