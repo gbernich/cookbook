@@ -102,6 +102,9 @@ if ($result->num_rows > 0) {
 		if ( $row['amount_num'] == 0 || $row['amount_den'] == 0 ) {
 			echo "<li>".$row['amount_whole']." ".$row['unit']." ".$row['ingredient']."</li>";
 		}
+		elseif ( $row['amount_whole'] == 0 ) {
+			echo "<li>".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']."</li>";
+		}
 		else {
 			echo "<li>".$row['amount_whole']." ".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']."</li>";
 		}
