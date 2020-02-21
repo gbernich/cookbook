@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 }
 
 // insert Recipe
-$sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, total_time, hot_cold, compliance_whole30, compliance_meatless, compliance_other, meal_type)
+$sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, total_time, hot_cold,  meal_type)
 			VALUES('".$_POST['name']."',
                                '".$_POST['description']."',
                                 ".$_POST['servings'].",
@@ -23,9 +23,6 @@ $sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, t
                                 ".$_POST['cook_time'].",
                                 ".$_POST['total_time'].",
                                '".$_POST['hot_cold']."',
-                                ".$_POST['compliance_whole30'].",
-                                ".$_POST['compliance_meatless'].",
-                                ".$_POST['compliance_other'].",
                                '".$_POST['meal_type']."');";
 
 
@@ -156,15 +153,6 @@ $conn->close();
 
 	<input type="radio" name="hot_cold" value="HOT" checked /> <span>Hot</span>
 	<input type="radio" name="hot_cold" value="COLD"        /> <span>Cold</span><br><br>
-
-	<input type="radio" name="compliance_whole30"  value="true"          /> <span>Whole30</span>
-	<input type="radio" name="compliance_whole30"  value="false" checked /> <span>No</span><br><br>
-
-	<input type="radio" name="compliance_meatless" value="true"          /> <span>Meatless</span>
-	<input type="radio" name="compliance_meatless" value="false" checked /> <span>No</span><br><br>
-
-	<input type="radio" name="compliance_other"    value="true"          /> <span>Other</span>
-	<input type="radio" name="compliance_other"    value="false" checked /> <span>No</span><br><br>
 
 	<input type="radio" name="meal_type"    value="BREAKFAST"  checked /> <span>Breakfast</span>
 	<input type="radio" name="meal_type"    value="LUNCH"              /> <span>Lunch</span>

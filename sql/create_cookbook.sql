@@ -10,9 +10,6 @@ create table Recipe (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	cook_time INT NOT NULL,
 	total_time INT NOT NULL,
 	hot_cold ENUM('HOT', 'COLD') NOT NULL,
-	compliance_whole30 BOOL NOT NULL,
-	compliance_meatless BOOL NOT NULL,
-	compliance_other BOOL NOT NULL,
 	meal_type ENUM('BREAKFAST', 'LUNCH', 'DINNER', 'DESSERT') NOT NULL,
 	calories INT,
 	fat INT,
@@ -32,12 +29,10 @@ create table Ingredient (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 create table Measure (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(30)) 
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-INSERT INTO Measure (name) VALUES('cup'), ('tsp'), ('tbsp'), ('ounces');
 
 create table Compliance (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
 	name VARCHAR(50)) 
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
-INSERT INTO Compliance (name) VALUES('WHOLE30'), ('KETO'), ('PALEO'), ('VEGETARIAN'), ('VEGAN');
 
 create table RecipeIngredient (recipe_id INT NOT NULL, 
 	ingredient_id INT NOT NULL, 
