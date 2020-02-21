@@ -42,11 +42,8 @@ function updateTable() {
 	compliances = getCheckedCheckboxesFor('compliance').join(',');
 	console.log(compliances);
 
-	// if string empty, reload all recipes
-	if (criteria == "") {
-		initPage();
-		return;
-	}
+	ingredients = getCheckedCheckboxesFor('ingredient').join(',');
+	console.log(ingredients);
 
 	// Clean up criteria
 	criteria = "(".concat(criteria, ")");
@@ -58,7 +55,7 @@ function updateTable() {
 			document.getElementById("recipeTable").innerHTML = this.responseText;
 		}
 	};
-	xmlhttp.open("GET", "findRecipes.php?criteria=" + criteria + "&compliances=" + compliances, true);
+	xmlhttp.open("GET", "findRecipes.php?criteria=" + criteria + "&compliances=" + compliances + "&ingredients=" + ingredients, true);
 	xmlhttp.send();
 
 }
@@ -66,9 +63,8 @@ function updateTable() {
 </script>
 </head>
 <body>
-
+	<h3>Meal Categories</h3>
 	<table>
-	<tr><td>Filters</td></tr>
 	<tr><td><input name="hot_cold"            type="checkbox" value="hot_cold='HOT'"           onclick="updateTable();"/>Hot</td>
 	    <td><input name="hot_cold"            type="checkbox" value="hot_cold='COLD'"          onclick="updateTable();"/>Cold</td></tr>
 	<tr><td><input name="meal_type"           type="checkbox" value="meal_type='BREAKFAST'"    onclick="updateTable();"/>Breakfast</td>
@@ -76,8 +72,6 @@ function updateTable() {
 	    <td><input name="meal_type"           type="checkbox" value="meal_type='DINNER'"       onclick="updateTable();"/>Dinner</td>
 	    <td><input name="meal_type"           type="checkbox" value="meal_type='DESSERT'"      onclick="updateTable();"/>Dessert</td></tr>
 	</table>
-
-	<table>
 
 <?php
 $servername = "localhost";
@@ -93,20 +87,38 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Compliance checkboxes
 $sql = "SELECT * FROM Compliance";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
+	echo "<h3>Compliances</h3><table>";
         while($row = $result->fetch_assoc()) {
 		echo "<tr><td><input name='compliance' type='checkbox' value=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
 	}
+	echo "</table>";
 } else {
-    echo "0 results";
+    echo "No compliances yet";
 }
+
+// Ingredient checkboxes
+$sql = "SELECT * FROM Ingredient";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+	echo "<h3>Ingredients</h3><table>";
+        while($row = $result->fetch_assoc()) {
+		echo "<tr><td><input name='ingredient' type='checkbox' value=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
+	}
+	echo "</table>";
+} else {
+    echo "No compliances yet";
+}
+
+
 $conn->close();
 ?> 
 
-</table>
 <br></br>
 
 <div id="recipeTable"></div>

@@ -13,12 +13,17 @@ if ($conn->connect_error) {
 }
 
 $criteria = $_GET['criteria'];
+
 if ( $_GET['compliances'] == "" ) {
 	$compliances = [];
 } else {
 	$compliances = explode(',', $_GET['compliances']);
 }
-$ingredients = explode(',', $_GET['ingredients']);
+if ( $_GET['ingredients'] == "" ) {
+	$ingredients = [];
+} else {
+	$ingredients = explode(',', $_GET['ingredients']);
+}
 
 if ( $criteria == "()" ) {
 	$sql = "SELECT * FROM Recipe;";
@@ -57,9 +62,23 @@ if ($result->num_rows > 0) {
 		}
 	}
 
+	//get ingredients
+	$sql = "SELECT * FROM RecipeIngredient WHERE recipe_id=".$row['id'].";";
+	$ingredient_result = $conn->query($sql);
+	$ingredient_count = 0;
+
+	// loop through each match and count the ingredient if it matches the users input
+	if ( $ingredient_result->num_rows > 0 ) {
+		while($ingredient_row = $ingredient_result->fetch_assoc()) {
+			if ( in_array($ingredient_row['ingredient_id'], $ingredients) ) {
+				$ingredient_count++;
+			}
+		}
+	}
+
 	// if the recipe complies with all compliances, then display it
-	echo "<p>".$compliance_count." ".sizeof($compliances)." ".$_GET['compliances']."</p>";
-        if ( $compliance_count == sizeof($compliances) ) {
+//	echo "<p>".$ingredient_count." ".sizeof($ingredients)." ".$_GET['ingredients']."</p>";
+        if ( $compliance_count == sizeof($compliances) AND $ingredient_count == sizeof($ingredients) ) {
 		echo "<tr>";
 		echo "<td><a href='http://cookbook.local/display.php?id=".$row[id]."'>".$row['name']."</a></td>";
         	echo "<td>".$row[prep_time]."</td>";
