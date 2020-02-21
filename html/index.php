@@ -88,7 +88,7 @@ if ($conn->connect_error) {
 }
 
 // Compliance checkboxes
-$sql = "SELECT * FROM Compliance";
+$sql = "SELECT * FROM Compliance ORDER BY name";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -102,7 +102,7 @@ if ($result->num_rows > 0) {
 }
 
 // Ingredient checkboxes
-$sql = "SELECT * FROM Ingredient";
+$sql = "SELECT * FROM Ingredient ORDER BY name";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -112,7 +112,7 @@ if ($result->num_rows > 0) {
 	}
 	echo "</table>";
 } else {
-    echo "No compliances yet";
+    echo "No ingredients yet";
 }
 
 
