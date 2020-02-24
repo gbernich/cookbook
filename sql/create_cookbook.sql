@@ -55,4 +55,9 @@ create table RecipeCompliance (recipe_id INT NOT NULL,
 	CONSTRAINT fk_recipe3 FOREIGN KEY(recipe_id) REFERENCES Recipe(id))
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
+create table RecipeLog (recipe_id INT NOT NULL, 
+	date DATE NOT NULL,
+	notes VARCHAR(200),
+	CONSTRAINT fk_recipe4 FOREIGN KEY(recipe_id) REFERENCES Recipe(id))
+	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 

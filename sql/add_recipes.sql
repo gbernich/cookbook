@@ -54,7 +54,9 @@ INSERT INTO RecipeCompliance (recipe_id, compliance_id) VALUES (3, 4);
 
 
 SELECT r.name AS 'Recipe', 
-	ri.amount AS 'Amount', 
+	ri.amount_whole AS 'Amount Whole', 
+	ri.amount_numerator AS 'Amount Num', 
+	ri.amount_denominator AS 'Amount Den', 
 	mu.name AS 'Unit of Measure', 
 	i.name AS 'Ingredient' 
 FROM Recipe r 

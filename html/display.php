@@ -55,7 +55,7 @@ WHERE r.id = ".$id.";";
 
 $result = $conn->query($sql);
 
-echo "<br><br>";
+echo "<br>";
 echo "<h3>Compliant with</h3>";
 
 if ($result->num_rows > 0) {
@@ -90,7 +90,7 @@ WHERE r.id = ".$id.";";
 
 $result = $conn->query($sql);
 
-echo "<br><br>";
+echo "<br>";
 echo "<h3>Ingredients</h3>";
 
 if ($result->num_rows > 0) {
@@ -121,7 +121,7 @@ if ($result->num_rows > 0) {
 $sql = "SELECT * FROM RecipeInstruction WHERE recipe_id = ".$id.";";
 $result = $conn->query($sql);
 
-echo "<br><br>";
+echo "<br>";
 echo "<h3>Instructions</h3>";
 
 if ($result->num_rows > 0) {
@@ -140,13 +140,50 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
+// Log
+$sql = "SELECT * FROM RecipeLog WHERE recipe_id = ".$id.";";
+$result = $conn->query($sql);
+
+echo "<br>";
+echo "<h3>Log</h3>";
+
+if ($result->num_rows > 0) {
+
+	// Table Header
+	echo "<table><tr><th>Date</th><th>Notes</th></tr>";
+
+	while($row = $result->fetch_assoc()) {
+		echo "<tr><td>".$row[cook_date]."</td><td>".$row[notes]."</td></tr>";
+	}
+
+	// Table end
+	echo "</table>";
+
+} else {
+    echo "0 results";
+}
+
+// New Log Entry
+if(isset($_POST['submit']))
+{
+	$sql    = "INSERT INTO RecipeLog (recipe_id, cook_date, notes) VALUES (".$id.", NOW(),'".$_POST['notes']."');";
+	$result = $conn->query($sql);
+	header("Refresh:0");
+}
 
 $conn->close();
-?> 
+?>
 
-<br></br>
 
 <div id="recipeTable"></div>
 
+<br>
+<h3>Log Entry</h3>
+
+<form method="post" action="">
+        <textarea cols="80" placeholder="Enter a note about your experience." rows="3" name="notes" maxlength="200" required></textarea><br>
+        <button type="submit" name="submit">Put it in the books!</button>
+</form>
+
 </body>
-</html> 
+</html>
