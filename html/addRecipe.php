@@ -15,13 +15,15 @@ if ($conn->connect_error) {
 }
 
 // insert Recipe
+$total_time = $_POST['prep_time'] + $_POST['cook_time'];
+
 $sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, total_time, hot_cold,  meal_type)
 			VALUES('".$_POST['name']."',
                                '".$_POST['description']."',
                                 ".$_POST['servings'].",
                                 ".$_POST['prep_time'].",
                                 ".$_POST['cook_time'].",
-                                ".$_POST['total_time'].",
+                                ".$total_time.",
                                '".$_POST['hot_cold']."',
                                '".$_POST['meal_type']."');";
 
@@ -143,13 +145,11 @@ $conn->close();
 
 	<textarea cols="80" placeholder="Recipe Description" rows="5" name="description" maxlength="200" required></textarea><br><br>
 
-	<input type="text" name="servings" placeholder="Servings" size="10" required><br><br>
+	<input type="text" name="servings" placeholder="Servings" size="10" required>
 
-	<input type="text" name="prep_time" placeholder="Prep Time" size="10">
+	<input type="text" name="prep_time" placeholder="Prep Time (min)" size="15">
 
-	<input type="text"  name="cook_time"  placeholder="Cook Time" size="10">
-
-	<input type="text"  name="total_time" placeholder="Total Time" size="10"><span> minutes</span><br><br>
+	<input type="text"  name="cook_time" placeholder="Cook Time (min)" size="15"><br><br>
 
 	<input type="radio" name="hot_cold" value="HOT" checked /> <span>Hot</span>
 	<input type="radio" name="hot_cold" value="COLD"        /> <span>Cold</span><br><br>
