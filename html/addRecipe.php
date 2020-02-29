@@ -155,7 +155,7 @@ $conn->close();
 <form method="post" action="">
 	<input type="text" name="name" placeholder="Recipe Name *" maxlength="50" size="80" required><br><br>
 
-	<textarea cols="80" placeholder="Recipe Description *" rows="5" name="description" maxlength="200" required></textarea><br><br>
+	<textarea cols="80" placeholder="Recipe Description *" rows="5" name="description" maxlength="250" required></textarea><br><br>
 
 	<input type="text" name="servings" placeholder="Servings *" size="10" pattern="[0-9]+" required>
 
