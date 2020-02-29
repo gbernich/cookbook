@@ -85,6 +85,10 @@ foreach( $ingredientLines as $ingredientLine )
 	$measure       = trim($ingredientArr[1]);
 	$ingredient    = trim($ingredientArr[2]);
 
+	if (sizeof($ingredientArr) > 3) {
+		$preparation = trim($ingredientArr[3]);
+	}
+
 	$amountArr = preg_split('/[\s\/]+/', trim($amount), 3);
 
 	if (sizeof($amountArr) == 3) {
@@ -131,9 +135,26 @@ foreach( $ingredientLines as $ingredientLine )
 		$measure_id = $conn->insert_id;
 	}
 
+	// See if preparation exists
+	if (sizeof($ingredientArr) > 3) {
+		$sql    = "SELECT * FROM Preparation WHERE name = '".$preparation."';";
+		$result = $conn->query($sql);
+
+		if ($result->num_rows > 0) {
+			// the preparation exists, use this id
+			$row = $result->fetch_assoc();
+			$preparation_id = $row["id"];
+		} else {
+			// the preparation doesnt exist, add it, and use latest id
+			$sql = "INSERT INTO Preparation (name) VALUES ('".$preparation."');";
+			$result = $conn->query($sql);
+			$preparation_id = $conn->insert_id;
+		}
+	}
+
 	// Associate ingredient with recipe
-	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount_whole, amount_numerator, amount_denominator) 
-                   VALUES (".$recipe_id.", ".$ingredient_id.", ".$measure_id.", ".$amount_whole.", ".$amount_numerator.", ".$amount_denominator.");";
+	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount_whole, amount_numerator, amount_denominator, preparation_id)
+                   VALUES (".$recipe_id.", ".$ingredient_id.", ".$measure_id.", ".$amount_whole.", ".$amount_numerator.", ".$amount_denominator.", ".$preparation_id.");";
 	$result = $conn->query($sql);
 
 }

@@ -81,10 +81,12 @@ SELECT r.name AS 'recipe',
         ri.amount_numerator AS 'amount_num', 
         ri.amount_denominator AS 'amount_den', 
         mu.name AS 'unit', 
-        i.name AS 'ingredient' 
+        i.name AS 'ingredient', 
+	p.name AS 'preparation'
 FROM Recipe r 
 JOIN RecipeIngredient ri on r.id = ri.recipe_id 
 JOIN Ingredient i on i.id = ri.ingredient_id 
+LEFT OUTER JOIN Preparation p on p.id = ri.preparation_id 
 LEFT OUTER JOIN Measure mu on mu.id = measure_id
 WHERE r.id = ".$id.";";
 
@@ -99,14 +101,22 @@ if ($result->num_rows > 0) {
 	echo "<ul>";
 
 	while($row = $result->fetch_assoc()) {
+
+		// Preparation string
+		if (is_null($row['preparation'])) {
+			$preparation_string = "";
+		} else {
+			$preparation_string = "- ".$row['preparation'];
+		}
+
 		if ( $row['amount_num'] == 0 || $row['amount_den'] == 0 ) {
-			echo "<li>".$row['amount_whole']." ".$row['unit']." ".$row['ingredient']."</li>";
+			echo "<li>".$row['amount_whole']." ".$row['unit']." ".$row['ingredient']." ".$preparation_string."</li>";
 		}
 		elseif ( $row['amount_whole'] == 0 ) {
-			echo "<li>".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']."</li>";
+			echo "<li>".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']." ".$preparation_string."</li>";
 		}
 		else {
-			echo "<li>".$row['amount_whole']." ".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']."</li>";
+			echo "<li>".$row['amount_whole']." ".$row['amount_num']."/".$row['amount_den']." ".$row['unit']." ".$row['ingredient']." ".$preparation_string."</li>";
 		}
 	}
 
