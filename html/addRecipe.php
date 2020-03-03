@@ -80,6 +80,7 @@ $ingredientLines = preg_split("/\r\n|\n|\r/", strtolower($_POST['ingredients']))
 foreach( $ingredientLines as $ingredientLine )
 {
 	// Parse ingredient line
+	$ingredientArr = [];
 	$ingredientArr = preg_split('/,/', $ingredientLine);
 	$amount        = trim($ingredientArr[0]);
 	$measure       = trim($ingredientArr[1]);
@@ -87,6 +88,8 @@ foreach( $ingredientLines as $ingredientLine )
 
 	if (sizeof($ingredientArr) > 3) {
 		$preparation = trim($ingredientArr[3]);
+	} else {
+		$preparation = " ";
 	}
 
 	$amountArr = preg_split('/[\s\/]+/', trim($amount), 3);
@@ -136,7 +139,7 @@ foreach( $ingredientLines as $ingredientLine )
 	}
 
 	// See if preparation exists
-	if (sizeof($ingredientArr) > 3) {
+//	if (sizeof($ingredientArr) > 3) {
 		$sql    = "SELECT * FROM Preparation WHERE name = '".$preparation."';";
 		$result = $conn->query($sql);
 
@@ -150,7 +153,7 @@ foreach( $ingredientLines as $ingredientLine )
 			$result = $conn->query($sql);
 			$preparation_id = $conn->insert_id;
 		}
-	}
+//	}
 
 	// Associate ingredient with recipe
 	$sql    = "INSERT INTO RecipeIngredient (recipe_id, ingredient_id, measure_id, amount_whole, amount_numerator, amount_denominator, preparation_id)

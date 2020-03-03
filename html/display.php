@@ -105,6 +105,8 @@ if ($result->num_rows > 0) {
 		// Preparation string
 		if (is_null($row['preparation'])) {
 			$preparation_string = "";
+		} elseif ($row['preparation'] == " ") {
+			$preparation_string = "";
 		} else {
 			$preparation_string = "- ".$row['preparation'];
 		}
