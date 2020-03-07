@@ -41,8 +41,6 @@ if ($result->num_rows > 0) {
     echo "<td>Prep Time</td>";
     echo "<td>Cook Time</td>";
     echo "<td>Calories</td>";
-    echo "<td>Meal Type</td>";
-    echo "<td>Hot/Cold</td>";
     echo "</tr>";
 
     // output data of each row
@@ -84,8 +82,6 @@ if ($result->num_rows > 0) {
         	echo "<td>".$row[prep_time]."</td>";
         	echo "<td>".$row[cook_time]."</td>";
         	echo "<td>".$row[calories]."</td>";
-        	echo "<td>".strtolower($row[meal_type])."</td>";
-        	echo "<td>".strtolower($row[hot_cold])."</td>";
         	echo "</tr>";
 	}
     }
