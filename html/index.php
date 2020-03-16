@@ -120,8 +120,10 @@ $conn->close();
 ?> 
 
 <br></br>
-
 <div id="recipeTable"></div>
+<br></br>
+
+<a target="_blank" href="http://cookbook.local/addRecipe.php">New Recipe</a>
 
 </body>
 </html> 
