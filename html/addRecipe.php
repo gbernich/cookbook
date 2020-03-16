@@ -183,9 +183,9 @@ $conn->close();
 
 	<input type="text" name="servings" placeholder="Servings *" size="10" pattern="[0-9]+" required>
 
-	<input type="text" name="prep_time" placeholder="Prep Time (min)" size="15" pattern="[0-9]*">
+	<input type="text" name="prep_time" placeholder="Prep Time (min)" size="15" pattern="[0-9]*" required>
 
-	<input type="text"  name="cook_time" placeholder="Cook Time (min)" size="15" pattern="[0-9]*"><br><br>
+	<input type="text"  name="cook_time" placeholder="Cook Time (min)" size="15" pattern="[0-9]*" required><br><br>
 
 	<input type="radio" name="hot_cold" value="HOT" checked /> <span>Hot</span>
 	<input type="radio" name="hot_cold" value="COLD"        /> <span>Cold</span><br><br>
