@@ -60,7 +60,7 @@
     <div class="col-3">
       <?php display_recipe_ingredients($ingredients); ?>
     </div>
-    <div class="col-6">
+    <div class="col-8">
       <?php display_recipe_instructions($instructions); ?>
     </div>
   </div>

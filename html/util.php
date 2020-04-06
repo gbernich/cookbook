@@ -107,12 +107,13 @@
             echo "<h1>".$recipe[name]."</h1>";
             echo "<p>".$recipe[description]."</p><br>";
 
-            echo "<table>";
-            echo "<tr><td>Serves </td><td>".$recipe[servings] ."  </td></tr>";
-            echo "<tr><td>Prep Time </td><td>".$recipe[prep_time] ." minutes</td></tr>";
-            echo "<tr><td>Cook Time </td><td>".$recipe[cook_time] ." minutes</td></tr>";
-            echo "<tr><td>Total Time</td><td>".$recipe[total_time]." minutes</td></tr>";
-            echo "</table>";
+            echo "<div class='row'>";
+            echo "<div class='col-2'><h4>Serves ".$recipe[servings]."</h4></div>";
+            echo "<div class='col-2'><h4>Prep Time ".$recipe[prep_time]." </h4></div>";
+            echo "<div class='col-2'><h4>Cook Time ".$recipe[cook_time]." </h4></div>";
+            echo "<div class='col-2'><h4>Total Time ".$recipe[total_time]." </h4></div>";
+            echo "</div>";
+
 
         } else {
             echo "Recipe Not Found";
@@ -125,16 +126,17 @@
     function display_recipe_compliances($compliances)
     {
         echo "<br>";
-        echo "<h3>Compliant with</h3>";
+        // echo "<h3>Compliant with</h3>";
 
         if ($compliances->num_rows > 0) {
 
 
+            echo "<div class='row'>";
             while($row = $compliances->fetch_assoc()) {
-                // echo "<li>".$row['compliance']."</li>";
-                echo "<span style='padding-right:20px' class='label'>".$row['compliance']."</span>";
+                // echo "<span style='padding-right:20px' class='label'>".$row['compliance']."</span>";
+                echo "<div class='col-2'><h4>".$row['compliance']."</h4></div>";
             }
-
+            echo "</div>";
 
         } else {
             echo "0 results";
