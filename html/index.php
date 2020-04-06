@@ -2,7 +2,8 @@
 <head>
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 	<meta content="utf-8" http-equiv="encoding">
-        <meta name="viewport" content="width=device-width, initial-scale=0.95">
+    <meta name="viewport" content="width=device-width, initial-scale=0.95">
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 </head>
 
 <script type="text/javascript">
