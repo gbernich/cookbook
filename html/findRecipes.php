@@ -21,6 +21,12 @@
     } else {
     	$ingredients = explode(',', $_GET['ingredients']);
     }
+    if ( $_GET['isLarge'] == 1 ) {
+        $phpFile = 'displayLarge.php';
+    } else {
+        $phpFile = 'display.php';
+    }
+    
 
     if ( $criteria == "()" ) {
     	$sql = "SELECT * FROM Recipe;";
@@ -75,7 +81,7 @@
     //	echo "<p>".$ingredient_count." ".sizeof($ingredients)." ".$_GET['ingredients']."</p>";
             if ( $compliance_count == sizeof($compliances) AND $ingredient_count == sizeof($ingredients) ) {
     		echo "<tr>";
-    		echo "<td><a href='http://cookbook.local/display.php?id=".$row[id]."'>".$row['name']."</a></td>";
+    		echo "<td><a href='http://cookbook.local/".$phpFile."?id=".$row[id]."'>".$row['name']."</a></td>";
             	echo "<td>".$row[prep_time]."</td>";
             	echo "<td>".$row[cook_time]."</td>";
             	echo "<td>".$row[calories]."</td>";

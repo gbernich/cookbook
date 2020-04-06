@@ -117,8 +117,6 @@
         } else {
             echo "Recipe Not Found";
         }
-
-
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -131,20 +129,18 @@
 
         if ($compliances->num_rows > 0) {
 
-            // Table Header
-            echo "<ul>";
 
             while($row = $compliances->fetch_assoc()) {
-                echo "<li>".$row['compliance']."</li>";
+                // echo "<li>".$row['compliance']."</li>";
+                echo "<span style='padding-right:20px' class='label'>".$row['compliance']."</span>";
             }
 
-            // Table end
-            echo "</ul>";
 
         } else {
             echo "0 results";
         }
     }
+
 
     ///////////////////////////////////////////////////////////////////////////
     // Display Recipe Ingredients
@@ -157,7 +153,7 @@
         if ($ingredients->num_rows > 0) {
 
             // Table Header
-            echo "<ul>";
+            echo "<ul style='list-style-type: none; padding-left: 0'>";
 
             while($row = $ingredients->fetch_assoc()) {
 
@@ -200,14 +196,14 @@
         if ($instructions->num_rows > 0) {
 
             // Table Header
-            echo "<ul>";
+            echo "<ol style='padding-left: 15px'>";
 
             while($row = $instructions->fetch_assoc()) {
                 echo "<li>".$row[instruction]."</li>";
             }
 
             // Table end
-            echo "</ul>";
+            echo "</ol>";
 
         } else {
             echo "0 results";

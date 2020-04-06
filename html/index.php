@@ -14,7 +14,14 @@
                 document.getElementById("recipeTable").innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", "showAllRecipes.php", true);
+
+        var isLarge = 0;
+        if (window.innerWidth > 1000) {
+            isLarge = 1;
+        }
+        console.log(isLarge);
+
+        xmlhttp.open("GET", "showAllRecipes.php?isLarge=" + isLarge, true);
         xmlhttp.send();
     }
     window.onload = initPage;
@@ -56,7 +63,13 @@ function updateTable() {
 			document.getElementById("recipeTable").innerHTML = this.responseText;
 		}
 	};
-	xmlhttp.open("GET", "findRecipes.php?criteria=" + criteria + "&compliances=" + compliances + "&ingredients=" + ingredients, true);
+
+    var isLarge = 0;
+    if (window.innerWidth > 1000) {
+        isLarge = 1;
+    }
+
+	xmlhttp.open("GET", "findRecipes.php?criteria=" + criteria + "&compliances=" + compliances + "&ingredients=" + ingredients + "&isLarge=" + isLarge, true);
 	xmlhttp.send();
 
 }

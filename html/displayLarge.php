@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-3">
       <?php display_recipe_ingredients($ingredients); ?>
     </div>
     <div class="col-6">
