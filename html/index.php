@@ -76,7 +76,7 @@ function updateTable() {
 
 </script>
 </head>
-<body>
+<body style="margin-left:0; padding:10">
 	<h3>Meal Categories</h3>
 	<table>
 	<tr><td><input name="hot_cold"            type="checkbox" value="hot_cold='HOT'"           onclick="updateTable();"/>Hot</td>

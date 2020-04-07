@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 </head>
 
-<body>
+<body style="margin-left:0; padding:10">
 
 <?php
     include 'util.php';
@@ -26,12 +26,6 @@
     $ingredients  = query_recipe_ingredients($conn, $id);
     $instructions = query_recipe_instructions($conn, $id);
     $log_entries  = query_recipe_log($conn, $id);
-    
-    //display_recipe_header($recipe);    
-    //display_recipe_compliances($compliances);
-    //display_recipe_ingredients($ingredients);
-    //display_recipe_instructions($instructions);
-    //display_recipe_log($log_entries);
 
     // New Log Entry
     if(isset($_POST['submit']))
@@ -44,36 +38,26 @@
     $conn->close();
 ?>
 
-
-
-  <div class="row">
-    <div class="col">
-      <?php display_recipe_header($recipe); ?>
-    </div>
-  </div>
+<div class="row">
+    <div class="col-1"><a href='/index.php'>Main Menu</a></div>
+    <div class="col-2"><?php  echo "<a href='/displayLarge.php?id=".$id."'>Switch View</a>"; ?></div>
+</div>
 
   <div class="row">
-    <div class="col">
-      <?php display_recipe_compliances($compliances); ?>
-    </div>
+    <div class="col"><?php display_recipe_header($recipe); ?></div>
   </div>
   <div class="row">
-    <div class="col">
-      <?php display_recipe_ingredients($ingredients); ?>
-    </div>
+    <div class="col"><?php display_recipe_compliances($compliances); ?></div>
   </div>
   <div class="row">
-    <div class="col">
-      <?php display_recipe_instructions($instructions); ?>
-    </div>
+    <div class="col"><?php display_recipe_ingredients($ingredients); ?></div>
   </div>
   <div class="row">
-    <div class="col">
-      <?php display_recipe_log($log_entries); ?>
-    </div>
+    <div class="col"><?php display_recipe_instructions($instructions); ?></div>
   </div>
-
-
+  <div class="row">
+    <div class="col"><?php display_recipe_log($log_entries); ?></div>
+  </div>
 
 <br>
 <h3>Log Entry</h3>

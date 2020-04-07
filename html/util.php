@@ -193,7 +193,7 @@
     function display_recipe_instructions($instructions)
     {
         echo "<br>";
-        echo "<h3>Instructions</h3>";
+        echo "<h4>Instructions</h4>";
 
         if ($instructions->num_rows > 0) {
 

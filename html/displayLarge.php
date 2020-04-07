@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 </head>
 
-<body>
+<body style="margin-left:0; padding:10">
 
 <?php
     include 'util.php';
@@ -26,49 +26,36 @@
     $ingredients  = query_recipe_ingredients($conn, $id);
     $instructions = query_recipe_instructions($conn, $id);
     $log_entries  = query_recipe_log($conn, $id);
-    
-    //display_recipe_header($recipe);    
-    //display_recipe_compliances($compliances);
-    //display_recipe_ingredients($ingredients);
-    //display_recipe_instructions($instructions);
-    //display_recipe_log($log_entries);
 
     // New Log Entry
     if(isset($_POST['submit']))
     {
-    	$sql    = "INSERT INTO RecipeLog (recipe_id, cook_date, notes) VALUES (".$id.", NOW(),'".$_POST['notes']."');";
-    	$result = $conn->query($sql);
-    	header("Refresh:0");
+        $sql    = "INSERT INTO RecipeLog (recipe_id, cook_date, notes) VALUES (".$id.", NOW(),'".$_POST['notes']."');";
+        $result = $conn->query($sql);
+        header("Refresh:0");
     }
 
     $conn->close();
 ?>
 
+<div class="row">
+    <div class="col-1"><a href='/index.php'>Main Menu</a></div>
+    <div class="col-2"><?php  echo "<a href='/display.php?id=".$id."'>Switch View</a>"; ?></div>
+</div>
 
-
-  <div class="row">
-    <div class="col">
-      <?php display_recipe_header($recipe); ?>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <?php display_recipe_compliances($compliances); ?>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-3">
-      <?php display_recipe_ingredients($ingredients); ?>
-    </div>
-    <div class="col-8">
-      <?php display_recipe_instructions($instructions); ?>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <?php display_recipe_log($log_entries); ?>
-    </div>
-  </div>
+<div class="row">
+    <div class="col"><?php display_recipe_header($recipe); ?></div>
+</div>
+<div class="row">
+    <div class="col"><?php display_recipe_compliances($compliances); ?></div>
+</div>
+<div class="row">
+    <div class="col-3"><?php display_recipe_ingredients($ingredients);   ?></div>
+    <div class="col-8"><?php display_recipe_instructions($instructions); ?></div>
+</div>
+<div class="row">
+    <div class="col"><?php display_recipe_log($log_entries); ?></div>
+</div>
 
 
 
