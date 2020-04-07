@@ -218,7 +218,7 @@
     function display_recipe_log($log_entries)
     {
         echo "<br>";
-        echo "<h3>Log</h3>";
+        // echo "<h3>Log</h3>";
 
         if ($log_entries->num_rows > 0) {
 
