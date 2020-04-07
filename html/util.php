@@ -193,7 +193,7 @@
     function display_recipe_instructions($instructions)
     {
         echo "<br>";
-        echo "<h4>Instructions</h4>";
+        echo "<h3>Instructions</h3>";
 
         if ($instructions->num_rows > 0) {
 
@@ -223,7 +223,7 @@
         if ($log_entries->num_rows > 0) {
 
             // Table Header
-            echo "<table><tr><th>Date</th><th>Notes</th></tr>";
+            echo "<table class='table table-hover'><tr><th style='width:10%'>Date</th><th>Notes</th></tr>";
 
             while($row = $log_entries->fetch_assoc()) {
                 echo "<tr><td>".$row[cook_date]."</td><td>".$row[notes]."</td></tr>";
@@ -236,8 +236,5 @@
             echo "0 results";
         }
     }
-
-
-
 
 ?>
