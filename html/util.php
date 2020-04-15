@@ -115,14 +115,6 @@
                 echo "</div><br>";
             }
 
-
-            // echo "<div class='row'>";
-            // echo "<div class='col-2'><h4>Serves ".$recipe[servings]."</h4></div>";
-            // echo "<div class='col-2'><h4>Prep Time ".$recipe[prep_time]." </h4></div>";
-            // echo "<div class='col-2'><h4>Cook Time ".$recipe[cook_time]." </h4></div>";
-            // echo "<div class='col-2'><h4>Total Time ".$recipe[total_time]." </h4></div>";
-            // echo "</div>";
-
             echo "<h5>Serves ".$recipe[servings]."</h5>";
             echo "<h5>Prep Time ".$recipe[prep_time]." </h5>";
             echo "<h5>Cook Time ".$recipe[cook_time]." </h5>";
@@ -151,8 +143,6 @@
             }
             echo "</div>";
 
-        } else {
-            echo "0 results";
         }
     }
 
@@ -196,7 +186,7 @@
             echo "</ul>";
 
         } else {
-            echo "0 results";
+            echo "No Ingredients!";
         }
     }
 
@@ -221,7 +211,7 @@
             echo "</ol>";
 
         } else {
-            echo "0 results";
+            echo "No instructions!";
         }
     }
 
@@ -246,8 +236,6 @@
             // Table end
             echo "</table>";
 
-        } else {
-            echo "0 results";
         }
     }
 
