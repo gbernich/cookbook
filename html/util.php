@@ -236,10 +236,11 @@
         if ($log_entries->num_rows > 0) {
 
             // Table Header
-            echo "<table class='table table-hover'><tr><th style='width:10%'>Date</th><th>Notes</th></tr>";
+            echo "<table class='table table-hover' style='table-layout: auto;'><tr><th>Date</th><th>Notes</th></tr>";
 
             while($row = $log_entries->fetch_assoc()) {
-                echo "<tr><td>".$row[cook_date]."</td><td>".$row[notes]."</td></tr>";
+                $tmp_date = date_format(date_create($row[cook_date]),"n/j/y");
+                echo "<tr><td>".$tmp_date."</td><td>".$row[notes]."</td></tr>";
             }
 
             // Table end
