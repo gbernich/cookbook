@@ -44,10 +44,7 @@
 </div>
 
   <div class="row">
-    <div class="col"><?php display_recipe_header($recipe); ?></div>
-  </div>
-  <div class="row">
-    <div class="col"><?php display_recipe_compliances($compliances); ?></div>
+    <div class="col"><?php display_recipe_header($recipe, $compliances); ?></div>
   </div>
   <div class="row">
     <div class="col"><?php display_recipe_ingredients($ingredients); ?></div>

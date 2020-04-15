@@ -98,21 +98,35 @@
     ///////////////////////////////////////////////////////////////////////////
     // Display Recipe Header
     ///////////////////////////////////////////////////////////////////////////
-    function display_recipe_header($recipe)
+    function display_recipe_header($recipe, $compliances)
     {
         if ($recipe->num_rows > 0) {
 
             $recipe = $recipe->fetch_assoc();
 
             echo "<h1>".$recipe[name]."</h1>";
-            echo "<p>".$recipe[description]."</p><br>";
+            echo "<h5>".$recipe[description]."</h5><br>";
 
-            echo "<div class='row'>";
-            echo "<div class='col-2'><h4>Serves ".$recipe[servings]."</h4></div>";
-            echo "<div class='col-2'><h4>Prep Time ".$recipe[prep_time]." </h4></div>";
-            echo "<div class='col-2'><h4>Cook Time ".$recipe[cook_time]." </h4></div>";
-            echo "<div class='col-2'><h4>Total Time ".$recipe[total_time]." </h4></div>";
-            echo "</div>";
+            if ($compliances->num_rows > 0) {
+                echo "<div class='row'>";
+                while($row = $compliances->fetch_assoc()) {
+                    echo "<h4><span class='label label-primary' style='background-color: #777; border-radius: .25em; padding: .2em .6em .3em; margin-left:15px'>".$row['compliance']."</span></h4>";
+                }
+                echo "</div><br>";
+            }
+
+
+            // echo "<div class='row'>";
+            // echo "<div class='col-2'><h4>Serves ".$recipe[servings]."</h4></div>";
+            // echo "<div class='col-2'><h4>Prep Time ".$recipe[prep_time]." </h4></div>";
+            // echo "<div class='col-2'><h4>Cook Time ".$recipe[cook_time]." </h4></div>";
+            // echo "<div class='col-2'><h4>Total Time ".$recipe[total_time]." </h4></div>";
+            // echo "</div>";
+
+            echo "<h5>Serves ".$recipe[servings]."</h5>";
+            echo "<h5>Prep Time ".$recipe[prep_time]." </h5>";
+            echo "<h5>Cook Time ".$recipe[cook_time]." </h5>";
+            echo "<h5>Total Time ".$recipe[total_time]." </h5>";
 
 
         } else {
@@ -133,7 +147,7 @@
 
             echo "<div class='row'>";
             while($row = $compliances->fetch_assoc()) {
-                echo "<h4><span class='label label-primary' style='background-color: #777; border-radius: .25em; padding: .2em .6em .3em; margin-left:20px'>".$row['compliance']."</span></h4>";
+                echo "<h4><span class='label label-primary' style='background-color: #777; border-radius: .25em; padding: .2em .6em .3em; margin-left:15px'>".$row['compliance']."</span></h4>";
             }
             echo "</div>";
 
@@ -149,7 +163,7 @@
     function display_recipe_ingredients($ingredients)
     {
         echo "<br>";
-        echo "<h3>Ingredients</h3>";
+        // echo "<h3>Ingredients</h3>";
 
         if ($ingredients->num_rows > 0) {
 
@@ -192,7 +206,7 @@
     function display_recipe_instructions($instructions)
     {
         echo "<br>";
-        echo "<h3>Instructions</h3>";
+        // echo "<h3>Instructions</h3>";
 
         if ($instructions->num_rows > 0) {
 
