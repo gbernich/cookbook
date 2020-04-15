@@ -39,8 +39,8 @@
 ?>
 
 <div class="row">
-    <div class="col-1"><a href='/index.php'>Main Menu</a></div>
-    <div class="col-2"><?php  echo "<a href='/display.php?id=".$id."'>Switch View</a>"; ?></div>
+    <a href="/index.php" class="btn btn-primary" role="button" style="margin-left: 15px">Main Menu</a>
+    <?php  echo "<a href='/display.php?id=".$id."' class='btn btn-primary' role='button' style='margin-left: 15px'>Switch View</a>"; ?>
 </div>
 <div class="row">
     <div class="col"><?php display_recipe_header($recipe, $compliances); ?></div>
