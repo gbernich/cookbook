@@ -59,8 +59,8 @@
 <h3>Log Entry</h3>
 
 <form method="post" action="">
-        <textarea cols="80" placeholder="Enter a note about your experience." rows="3" name="notes" maxlength="200" required></textarea><br>
-        <button type="submit" name="submit">Put it in the books!</button>
+        <textarea cols="80" placeholder="Enter a note about your experience." rows="3" name="notes" maxlength="350" required></textarea><br><br>
+        <button type="submit" name="submit" class="btn btn-primary">Put it in the books!</button>
 </form>
 
 </body>
