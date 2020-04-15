@@ -133,8 +133,7 @@
 
             echo "<div class='row'>";
             while($row = $compliances->fetch_assoc()) {
-                // echo "<span style='padding-right:20px' class='label'>".$row['compliance']."</span>";
-                echo "<div class='col-2'><h4>".$row['compliance']."</h4></div>";
+                echo "<h4><span class='label label-primary' style='background-color: #777; border-radius: .25em; padding: .2em .6em .3em; margin-left:20px'>".$row['compliance']."</span></h4>";
             }
             echo "</div>";
 
