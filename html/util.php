@@ -17,6 +17,29 @@
     }
 
     ///////////////////////////////////////////////////////////////////////////
+    // Remove Recipe
+    ///////////////////////////////////////////////////////////////////////////
+    function delete_recipe($connection, $id)
+    {
+        $sql = "DELETE FROM Recipe WHERE id = ".$id.";";
+        $result = $connection->query($sql);
+        
+        $sql = "DELETE FROM RecipeCompliance WHERE recipe_id = ".$id.";";
+        $result = $connection->query($sql);
+        
+        $sql = "DELETE FROM RecipeIngredient WHERE recipe_id = ".$id.";";
+        $result = $connection->query($sql);
+        
+        $sql = "DELETE FROM RecipeInstruction WHERE recipe_id = ".$id.";";
+        $result = $connection->query($sql);
+        
+        $sql = "DELETE FROM RecipeLog WHERE recipe_id = ".$id.";";
+        $result = $connection->query($sql);
+        
+        echo "Done deleting recipe " . $id ;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
     // Queries for recipe
     ///////////////////////////////////////////////////////////////////////////
     function query_recipe($connection, $id)

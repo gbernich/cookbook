@@ -11,7 +11,7 @@
 
     $id = $_GET['id'];
 
-    echo $id;
+    delete_recipe($conn, $id);
  
     $conn->close();
 ?> 
