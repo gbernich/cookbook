@@ -40,7 +40,7 @@
 
 	// See if compliance exists
 	if ( trim($_POST['compliances']) != "" ) {
-		$complianceLines = preg_split("/\r\n|\n|\r/", strtolower($_POST['compliances']));
+		$complianceLines = preg_split("/\r\n|\n|\r/", strtolower(trim($_POST['compliances'])));
 		foreach( $complianceLines as $complianceLine )
 		{
 			$compliance = trim($complianceLine);
@@ -65,7 +65,7 @@
 	}
 
 	// Handle Recipe Instructions
-	$instructions = preg_split("/\r\n|\n|\r/", $_POST['instructions']);
+	$instructions = preg_split("/\r\n|\n|\r/", trim($_POST['instructions']));
 	foreach( $instructions as $instruction )
 	{
 		$sql    = "INSERT INTO RecipeInstruction (recipe_id, instruction) VALUES (".$recipe_id.", '".$instruction."');";
@@ -73,7 +73,8 @@
 	}
 
 	// Handle Recipe Ingredients
-	$ingredientLines = preg_split("/\r\n|\n|\r/", strtolower($_POST['ingredients']));
+	$ingredientLines = preg_split("/\r\n|\n|\r/", strtolower(trim($_POST['ingredients']))
+	);
 	foreach( $ingredientLines as $ingredientLine )
 	{
 		// Parse ingredient line
