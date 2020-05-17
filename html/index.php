@@ -87,50 +87,22 @@ function updateTable() {
 	    <td><input name="meal_type"           type="checkbox" value="meal_type='DESSERT'"      onclick="updateTable();"/>Dessert</td></tr>
 	</table>
 
-<?php
-$servername = "localhost";
-$username   = "cookbook";
-$password   = "password";
-$dbname     = "Cookbook";
+<?php 
+    include 'util.php';
+    
+    // Create connection
+    $conn = connect();
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    // Get checkboxes
+    display_compliance_checkboxes($conn);
+    display_ingredient_checkboxes($conn);
 
-// Compliance checkboxes
-$sql = "SELECT * FROM Compliance ORDER BY name";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-	echo "<h3>Compliances</h3><table>";
-        while($row = $result->fetch_assoc()) {
-		echo "<tr><td><input name='compliance' type='checkbox' value=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
-	}
-	echo "</table>";
-} else {
-    echo "No compliances yet";
-}
-
-// Ingredient checkboxes
-$sql = "SELECT * FROM Ingredient ORDER BY name";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-	echo "<h3>Ingredients</h3><table>";
-        while($row = $result->fetch_assoc()) {
-		echo "<tr><td><input name='ingredient' type='checkbox' value=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
-	}
-	echo "</table>";
-} else {
-    echo "No ingredients yet";
-}
-
-
-$conn->close();
+    $conn->close();
 ?> 
 
 <br></br>

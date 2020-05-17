@@ -262,4 +262,42 @@
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // Display Compliance Checkboxes
+    ///////////////////////////////////////////////////////////////////////////
+    function display_compliance_checkboxes($connection)
+    {
+        $sql = "SELECT * FROM Compliance ORDER BY name";
+        $result = $connection->query($sql);
+        
+        if ($result->num_rows > 0) {
+        	echo "<h3>Compliances</h3><table>";
+                while($row = $result->fetch_assoc()) {
+        		echo "<tr><td><input name='compliance' type='checkbox' value=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
+        	}
+        	echo "</table>";
+        } else {
+            echo "No compliances yet";
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // Display Ingredient Checkboxes
+    ///////////////////////////////////////////////////////////////////////////
+    function display_ingredient_checkboxes($connection)
+    {
+        $sql = "SELECT * FROM Ingredient ORDER BY name";
+        $result = $connection->query($sql);
+        
+        if ($result->num_rows > 0) {
+        	echo "<h3>Ingredients</h3><table>";
+                while($row = $result->fetch_assoc()) {
+        		echo "<tr><td><input name='ingredient' type='checkbox' value=".$row['id']." onclick='updateTable();' >".$row['name']."</input></td></tr>\n";
+        	}
+        	echo "</table>";
+        } else {
+            echo "No ingredients yet";
+        }
+    }
+
 ?>
