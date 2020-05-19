@@ -11,21 +11,40 @@
 	        die("Connection failed: " . $conn->connect_error);
 	    }
 
-	// insert Recipe
+        // Delete Recipe
+	    $recipe_id = $_GET['id'];
+        delete_recipe_for_replacement($conn, $recipe_id);
+        
+	// Insert Recipe as a new recipe, with the same id
 	$total_time = $_POST['prep_time'] + $_POST['cook_time'];
 
-	$sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, total_time, hot_cold,  meal_type)
-				VALUES('".$_POST['name']."',
-	                               '".$_POST['description']."',
-	                                ".$_POST['servings'].",
-	                                ".$_POST['prep_time'].",
-	                                ".$_POST['cook_time'].",
-	                                ".$total_time.",
-	                               '".$_POST['hot_cold']."',
-	                               '".$_POST['meal_type']."');";
-
-	$result    = $conn->query($sql);
-	$recipe_id = $conn->insert_id;
+	/*$sql = "INSERT INTO Recipe (name, description, servings, prep_time, cook_time, total_time, hot_cold,  meal_type)
+				VALUES(
+				       '".$_POST['name']."',
+                       '".$_POST['description']."',
+                        ".$_POST['servings'].",
+                        ".$_POST['prep_time'].",
+                        ".$_POST['cook_time'].",
+                        ".$total_time.",
+                       '".$_POST['hot_cold']."',
+                       '".$_POST['meal_type']."');";
+                       */
+    $sql = "UPDATE Recipe SET name='".$_POST['name']."' WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
+    $sql = "UPDATE Recipe SET description='".$_POST['description']."' WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
+    $sql = "UPDATE Recipe SET servings=".$_POST['servings']." WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
+    $sql = "UPDATE Recipe SET prep_time=".$_POST['prep_time']." WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
+    $sql = "UPDATE Recipe SET cook_time=".$_POST['cook_time']." WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
+    $sql = "UPDATE Recipe SET total_time=".$total_time." WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
+    $sql = "UPDATE Recipe SET hot_cold='".$_POST['hot_cold']."' WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
+    $sql = "UPDATE Recipe SET meal_type='".$_POST['meal_type']."' WHERE id=".$recipe_id.";";
+    $result = $conn->query($sql);
 
 	// Add Nutrition, if available
 	if ( $_POST['calories'] 	!= "" ) { $sql = "UPDATE Recipe SET calories=".		$_POST['calories']." 		WHERE id=".$recipe_id.";"; $result = $conn->query($sql); }
@@ -162,6 +181,9 @@
 
 	// Close connection
 	$conn->close();
+	
+	header("Location: displayLarge.php?id=".$recipe_id);
+    die();
 }
 
 ?>
@@ -187,23 +209,82 @@
     }
 
     // Get Recipe Data
-    $id = $_GET['id'];
-    
-    
+    $id           = $_GET['id'];
+    $recipe       = query_recipe($conn, $id);
+    $compliances  = query_recipe_compliances($conn, $id);
+    $ingredients  = query_recipe_ingredients($conn, $id);
+    $instructions = query_recipe_instructions($conn, $id);
+    $log_entries  = query_recipe_log($conn, $id);
     
     // Create same fields that are in addRecipe.php but populate them with the Recipe.
-	display_form_recipe_name("test!!!");
-    display_form_recipe_description("abcdefg");
-    display_form_recipe_servings("4");
-    display_form_recipe_prep_time("10");
-    display_form_recipe_cook_time("15");
-    display_form_recipe_hot_cold("cold");
-    display_form_recipe_meal_type("lunch");
-    display_form_recipe_compliances(array("whole30", "paleo"));
-    display_form_recipe_ingredients(array("whole30", "paleo1"));
-    display_form_recipe_instructions(array("whole30", "paleo2"));
-    display_form_recipe_nutrition(array("1", "2", "3", "4", "5", "6", "7", "8", "9"));
-    
+    if ($recipe->num_rows > 0) {
+        // recipe exists!
+        $recipe = $recipe->fetch_assoc();
+
+	    display_form_recipe_name($recipe[name]);
+        display_form_recipe_description($recipe[description]);
+        display_form_recipe_servings($recipe[servings]);
+        display_form_recipe_prep_time($recipe[prep_time]);
+        display_form_recipe_cook_time($recipe[cook_time]);
+        display_form_recipe_hot_cold(strtolower($recipe[hot_cold]));
+        display_form_recipe_meal_type(strtolower($recipe[meal_type]));
+        
+        $compliance_arr = [];
+        if ($compliances->num_rows > 0) {
+            while($row = $compliances->fetch_assoc()) {
+                array_push($compliance_arr, $row[compliance]);
+            }
+        }
+        display_form_recipe_compliances($compliance_arr);
+        
+        $ingredient_arr = [];
+        if ($ingredients->num_rows > 0) {
+            while($row = $ingredients->fetch_assoc()) {
+                // Preparation string
+                if (is_null($row[preparation])) {
+                    $preparation_string = "";
+                } elseif ($row[preparation] == " ") {
+                    $preparation_string = "";
+                } else {
+                    $preparation_string = " - ".$row[preparation];
+                }
+                
+                // Ingredient string
+                if ( $row[amount_num] == 0 || $row[amount_den] == 0 ) {
+                    $ingredient_string = $row[amount_whole] . ", " . $row[unit] . ", " . $row[ingredient] . $preparation_string;
+                }
+                elseif ( $row[amount_whole] == 0 ) {
+                    $ingredient_string = $row[amount_num] . "/" . $row[amount_den]. ", " . $row[unit] . ", " . $row[ingredient] . $preparation_string;
+                }
+                else {
+                    $ingredient_string = $row[amount_whole] . " " .$row[amount_num] . "/" . $row[amount_den]. ", " . $row[unit] . ", " . $row[ingredient] . $preparation_string;
+                }
+                
+                array_push($ingredient_arr, $ingredient_string);
+            }
+        }
+        display_form_recipe_ingredients($ingredient_arr);
+        
+        $instruction_arr = [];
+        if ($instructions->num_rows > 0) {
+            while($row = $instructions->fetch_assoc()) {
+                array_push($instruction_arr, $row[instruction]);
+            }
+        }
+        display_form_recipe_instructions($instruction_arr);
+        
+        $nutrition_arr = [];
+        $nutrition_arr[0] = $recipe[calories];
+        $nutrition_arr[1] = $recipe[total_fat];
+        $nutrition_arr[2] = $recipe[saturated_fat];
+        $nutrition_arr[3] = $recipe[cholesterol];
+        $nutrition_arr[4] = $recipe[sodium];
+        $nutrition_arr[5] = $recipe[carbohydrates];
+        $nutrition_arr[6] = $recipe[fiber];
+        $nutrition_arr[7] = $recipe[sugar];
+        $nutrition_arr[8] = $recipe[protein];
+        display_form_recipe_nutrition($nutrition_arr);
+    }
 	// Close connection
 	$conn->close();
 ?>

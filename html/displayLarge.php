@@ -40,7 +40,8 @@
 
 <div class="row">
     <a href="/index.php" class="btn btn-primary" role="button" style="margin-left: 15px">Main Menu</a>
-    <?php  echo "<a href='/display.php?id=".$id."' class='btn btn-primary' role='button' style='margin-left: 15px'>Switch View</a>"; ?>
+    <?php  echo "<a href='/display.php?id=".$id."' class='btn btn-primary' role='button' style='margin-left: 15px'>Switch View</a>";
+           echo "<a href='/editRecipe.php?id=".$id."' class='btn btn-primary' role='button' style='margin-left: 15px'>Edit Recipe</a>"; ?>
 </div>
 <div class="row">
     <div class="col"><?php display_recipe_header($recipe, $compliances); ?></div>

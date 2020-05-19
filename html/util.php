@@ -20,10 +20,7 @@
     // Remove Recipe
     ///////////////////////////////////////////////////////////////////////////
     function delete_recipe($connection, $id)
-    {
-        $sql = "DELETE FROM Recipe WHERE id = ".$id.";";
-        $result = $connection->query($sql);
-        
+    {   
         $sql = "DELETE FROM RecipeCompliance WHERE recipe_id = ".$id.";";
         $result = $connection->query($sql);
         
@@ -36,7 +33,25 @@
         $sql = "DELETE FROM RecipeLog WHERE recipe_id = ".$id.";";
         $result = $connection->query($sql);
         
+        $sql = "DELETE FROM Recipe WHERE id = ".$id.";";
+        $result = $connection->query($sql);
+        
         echo "Done deleting recipe " . $id ;
+    }
+    
+    ///////////////////////////////////////////////////////////////////////////
+    // Remove Recipe, Keep Log
+    ///////////////////////////////////////////////////////////////////////////
+    function delete_recipe_for_replacement($connection, $id)
+    {   
+        $sql = "DELETE FROM RecipeCompliance WHERE recipe_id = ".$id.";";
+        $result = $connection->query($sql);
+        
+        $sql = "DELETE FROM RecipeIngredient WHERE recipe_id = ".$id.";";
+        $result = $connection->query($sql);
+        
+        $sql = "DELETE FROM RecipeInstruction WHERE recipe_id = ".$id.";";
+        $result = $connection->query($sql);
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -307,7 +322,7 @@
     function display_form_recipe_name($value)
     {
         $tmp = '';
-        if ($value != ''){$tmp = " value=".$value." ";} // format value field
+        if ($value != ''){$tmp = " value='".$value."' ";} // format value field
         echo "<input type='text' name='name' placeholder='Recipe Name *' ".$tmp." maxlength='80' size='80' required><br><br>";
     }
     
@@ -319,20 +334,20 @@
     function display_form_recipe_servings($value)
     {
         $tmp = '';
-        if ($value != ''){$tmp = " value=".$value." ";} // format value field
+        if ($value != ''){$tmp = " value='".$value."' ";} // format value field
         echo "<input type='text' name='servings' placeholder='Servings *' ".$tmp." size='10' pattern='[0-9]+' required>";
     }
     
     function display_form_recipe_prep_time($value)
     {
         $tmp = '';
-        if ($value != ''){$tmp = " value=".$value." ";} // format value field
+        if ($value != ''){$tmp = " value='".$value."' ";} // format value field
         echo "<input type='text' name='prep_time' placeholder='Prep Time (min)' ".$tmp." size='15' pattern='[0-9]*' required>";
     }
     
     function display_form_recipe_cook_time($value)
     {
-        if ($value != ''){$tmp = " value=".$value." ";} // format value field
+        if ($value != ''){$tmp = " value='".$value."' ";} // format value field
         echo "<input type='text' name='cook_time' placeholder='Cook Time (min)' ".$tmp." size='15' pattern='[0-9]*' required><br><br>";
     }
     
@@ -379,7 +394,7 @@
     function display_form_recipe_instructions($values)
     {
         $tmp = '';
-        if (sizeof($values) > 0){$tmp = join("\n", $values);}
+        if (sizeof($values) > 0){$tmp = implode("\n", $values);}
         echo "<textarea cols='80' placeholder='Instruction: one per line *' rows='10' name='instructions' required>".$tmp."</textarea><br><br>";
     }
     
@@ -392,7 +407,7 @@
             } else {
                 $tmp[] = '';
             }
-        } 
+        }
         echo "<input type='text' name='calories'      placeholder='Calories'          maxlength='10' size='20' pattern='[0-9]*' ".$tmp[0]."><span>Calories</span><br>";
         echo "<input type='text' name='total_fat'     placeholder='Total Fat (g)'     maxlength='10' size='20' pattern='[0-9]*' ".$tmp[1]."><span>Total Fat (g)</span><br>";
         echo "<input type='text' name='saturated_fat' placeholder='Saturated Fat (g)' maxlength='10' size='20' pattern='[0-9]*' ".$tmp[2]."><span>Saturated Fat (g)</span><br>";
